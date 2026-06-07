@@ -1,0 +1,224 @@
+[
+  {
+    "id": "231fecbb-c0ae-4d15-826c-a68dcd7dca99",
+    "title": "HTML/CSS 初回クイズ",
+    "actionType": "create",
+    "sourceTopicIds": [
+      "bf62bf13-0825-48d9-95f3-7c844a8d9b17"
+    ],
+    "improvedFromQuizSetId": "",
+    "generationReason": "高優先度の新規学習対象。HTML/CSSを大分類として、セマンティックHTML、アクセシビリティ、CSSカスケード、保守性を初回範囲にした。",
+    "questions": [
+      {
+        "id": "231fecbb-c0ae-4d15-826c-a68dcd7dca99-q1",
+        "difficulty": "beginner",
+        "type": "multiple-choice",
+        "prompt": "HTMLでページ内の主要な本文コンテンツを表す要素として最も適切なものはどれですか？",
+        "choices": [
+          "span",
+          "main",
+          "br",
+          "style"
+        ],
+        "answer": "main",
+        "explanation": "main要素は文書の主要な内容を表すために使います。spanは汎用のインライン要素で、構造的な意味はほとんど持ちません。",
+        "sourceTopicId": "bf62bf13-0825-48d9-95f3-7c844a8d9b17"
+      },
+      {
+        "id": "231fecbb-c0ae-4d15-826c-a68dcd7dca99-q2",
+        "difficulty": "intermediate",
+        "type": "multiple-choice",
+        "prompt": "フォーム入力でlabel要素を使う主な利点はどれですか？",
+        "choices": [
+          "必ずサーバー側バリデーションが不要になる",
+          "CSSの詳細度を自動的に下げられる",
+          "入力欄の意味を支援技術にも伝えやすくし、クリック可能領域も広げられる",
+          "すべての入力値を暗号化できる"
+        ],
+        "answer": "入力欄の意味を支援技術にも伝えやすくし、クリック可能領域も広げられる",
+        "explanation": "labelは入力欄と説明を関連付け、アクセシビリティと操作性を高めます。バリデーションや暗号化を代替するものではありません。",
+        "sourceTopicId": "bf62bf13-0825-48d9-95f3-7c844a8d9b17"
+      },
+      {
+        "id": "231fecbb-c0ae-4d15-826c-a68dcd7dca99-q3",
+        "difficulty": "advanced",
+        "type": "multiple-choice",
+        "prompt": "同じ要素に複数のCSS宣言が競合したとき、同じoriginかつ同じcascade layer内で優先順位に強く関係するものはどれですか？",
+        "choices": [
+          "HTMLファイル名の長さ",
+          "画像ファイルの容量",
+          "コメントの数",
+          "セレクターの詳細度"
+        ],
+        "answer": "セレクターの詳細度",
+        "explanation": "CSSでは競合する宣言の解決に詳細度が関係します。ただしorigin、重要度、cascade layer、ソース順なども合わせて考える必要があります。",
+        "sourceTopicId": "bf62bf13-0825-48d9-95f3-7c844a8d9b17"
+      },
+      {
+        "id": "231fecbb-c0ae-4d15-826c-a68dcd7dca99-q4",
+        "difficulty": "expert",
+        "type": "multiple-choice",
+        "prompt": "大規模CSSで!importantの使用を減らし、上書きしやすさを保つ設計として最も適切なものはどれですか？",
+        "choices": [
+          "低い詳細度を保ち、cascade layerや設計ルールで優先順位を管理する",
+          "すべてのセレクターにIDを付ける",
+          "全宣言に!importantを付ける",
+          "HTML側でstyle属性だけを使う"
+        ],
+        "answer": "低い詳細度を保ち、cascade layerや設計ルールで優先順位を管理する",
+        "explanation": "詳細度を上げすぎると後から安全に上書きしにくくなります。低い詳細度とレイヤー設計を使うと、保守性を保ちやすくなります。",
+        "sourceTopicId": "bf62bf13-0825-48d9-95f3-7c844a8d9b17"
+      }
+    ],
+    "createdAt": "2026-06-07T09:56:57.732Z",
+    "updatedAt": "2026-06-07T09:56:57.732Z"
+  },
+  {
+    "id": "aea911e4-606f-4082-a3b9-ab0bbc95e126",
+    "title": "自然言語処理 復習クイズ",
+    "actionType": "create",
+    "sourceTopicIds": [
+      "e775dd02-2803-4f1a-a2c7-e65e75212583"
+    ],
+    "improvedFromQuizSetId": "",
+    "generationReason": "復習目的のメモ。基礎概念からTransformer周辺まで、忘れやすい観点を段階的に確認する初回セットにした。",
+    "questions": [
+      {
+        "id": "aea911e4-606f-4082-a3b9-ab0bbc95e126-q1",
+        "difficulty": "beginner",
+        "type": "multiple-choice",
+        "prompt": "自然言語処理におけるトークン化の説明として最も適切なものはどれですか？",
+        "choices": [
+          "画像の解像度を下げること",
+          "データベースの索引を削除すること",
+          "文章を単語やサブワードなどの処理単位に分けること",
+          "モデルの重みをすべて0にすること"
+        ],
+        "answer": "文章を単語やサブワードなどの処理単位に分けること",
+        "explanation": "NLPでは文字列をモデルが扱いやすい単位へ分割します。単語、文字、サブワードなど、タスクやモデルにより単位は変わります。",
+        "sourceTopicId": "e775dd02-2803-4f1a-a2c7-e65e75212583"
+      },
+      {
+        "id": "aea911e4-606f-4082-a3b9-ab0bbc95e126-q2",
+        "difficulty": "intermediate",
+        "type": "multiple-choice",
+        "prompt": "静的単語埋め込みと文脈化埋め込みの違いとして正しいものはどれですか？",
+        "choices": [
+          "静的単語埋め込みは文ごとに必ず別のベクトルになる",
+          "文脈化埋め込みでは語順情報が一切使えない",
+          "どちらも文字列を画像に変換する技術である",
+          "文脈化埋め込みは同じ単語でも周囲の文脈により表現が変わり得る"
+        ],
+        "answer": "文脈化埋め込みは同じ単語でも周囲の文脈により表現が変わり得る",
+        "explanation": "Word2VecやGloVeのような静的埋め込みは語に固定表現を割り当てます。一方、BERT系などでは周囲の文脈に応じて表現が変化します。",
+        "sourceTopicId": "e775dd02-2803-4f1a-a2c7-e65e75212583"
+      },
+      {
+        "id": "aea911e4-606f-4082-a3b9-ab0bbc95e126-q3",
+        "difficulty": "advanced",
+        "type": "multiple-choice",
+        "prompt": "Transformerで位置情報を加える必要がある主な理由はどれですか？",
+        "choices": [
+          "活性化関数を不要にするため",
+          "自己注意だけではトークン順序を直接区別しにくいため",
+          "語彙サイズを必ず1にするため",
+          "損失関数を計算しないため"
+        ],
+        "answer": "自己注意だけではトークン順序を直接区別しにくいため",
+        "explanation": "自己注意は各トークン間の関係を扱えますが、順序情報は別途入れないと文の並びを区別しにくくなります。位置埋め込みなどで順序情報を補います。",
+        "sourceTopicId": "e775dd02-2803-4f1a-a2c7-e65e75212583"
+      },
+      {
+        "id": "aea911e4-606f-4082-a3b9-ab0bbc95e126-q4",
+        "difficulty": "expert",
+        "type": "multiple-choice",
+        "prompt": "NLPモデル評価でデータリークを疑うべき状況として最も適切なものはどれですか？",
+        "choices": [
+          "訓練データと評価データに同一または極めて類似した文が混入している",
+          "評価指標を複数見る",
+          "検証データを訓練から分離する",
+          "誤答例を人間が確認する"
+        ],
+        "answer": "訓練データと評価データに同一または極めて類似した文が混入している",
+        "explanation": "評価データに訓練時と同じ情報が含まれると、実力以上に高い性能が出る可能性があります。特に重複、派生文、テンプレート生成データには注意が必要です。",
+        "sourceTopicId": "e775dd02-2803-4f1a-a2c7-e65e75212583"
+      }
+    ],
+    "createdAt": "2026-06-07T09:56:57.748Z",
+    "updatedAt": "2026-06-07T09:56:57.748Z"
+  },
+  {
+    "id": "616a6674-a7bb-42ae-bd2c-a88888c66c9f",
+    "title": "簿記3級 初回クイズ",
+    "actionType": "create",
+    "sourceTopicIds": [
+      "7fc4ea63-02ee-4661-8e7b-70315b4e831c"
+    ],
+    "improvedFromQuizSetId": "",
+    "generationReason": "簿記三級の補足に合わせ、商業簿記の基礎、仕訳、決算整理、試験で混乱しやすい判断を初回範囲にした。",
+    "questions": [
+      {
+        "id": "616a6674-a7bb-42ae-bd2c-a88888c66c9f-q1",
+        "difficulty": "beginner",
+        "type": "multiple-choice",
+        "prompt": "簿記で、現金が増加したときの基本的な記入位置はどれですか？",
+        "choices": [
+          "貸方",
+          "摘要欄のみ",
+          "記入しない",
+          "借方"
+        ],
+        "answer": "借方",
+        "explanation": "現金は資産です。資産の増加は借方、資産の減少は貸方に記入します。",
+        "sourceTopicId": "7fc4ea63-02ee-4661-8e7b-70315b4e831c"
+      },
+      {
+        "id": "616a6674-a7bb-42ae-bd2c-a88888c66c9f-q2",
+        "difficulty": "intermediate",
+        "type": "multiple-choice",
+        "prompt": "商品を掛けで販売した場合の基本的な仕訳として最も適切なものはどれですか？",
+        "choices": [
+          "借方 仕入 / 貸方 買掛金",
+          "借方 売掛金 / 貸方 売上",
+          "借方 現金 / 貸方 借入金",
+          "借方 売上 / 貸方 売掛金"
+        ],
+        "answer": "借方 売掛金 / 貸方 売上",
+        "explanation": "掛け販売では代金を後で受け取る権利である売掛金が増え、売上が発生します。",
+        "sourceTopicId": "7fc4ea63-02ee-4661-8e7b-70315b4e831c"
+      },
+      {
+        "id": "616a6674-a7bb-42ae-bd2c-a88888c66c9f-q3",
+        "difficulty": "advanced",
+        "type": "multiple-choice",
+        "prompt": "決算整理仕訳を行う主な目的として最も適切なものはどれですか？",
+        "choices": [
+          "期末時点の収益・費用・資産・負債を適切に反映するため",
+          "すべての取引をなかったことにするため",
+          "仕訳帳を使わないようにするため",
+          "貸借を意図的に不一致にするため"
+        ],
+        "answer": "期末時点の収益・費用・資産・負債を適切に反映するため",
+        "explanation": "決算整理では、売上原価、貸倒引当金、減価償却、費用収益の見越し・繰延べなどを通じて期間損益や財政状態を整えます。",
+        "sourceTopicId": "7fc4ea63-02ee-4661-8e7b-70315b4e831c"
+      },
+      {
+        "id": "616a6674-a7bb-42ae-bd2c-a88888c66c9f-q4",
+        "difficulty": "expert",
+        "type": "multiple-choice",
+        "prompt": "試算表では貸借が一致しているのに、誤りが残っている可能性があるケースはどれですか？",
+        "choices": [
+          "借方だけ金額を書き忘れている",
+          "貸方だけ二重に記入している",
+          "正しい金額を誤った勘定科目に記入している",
+          "借方と貸方の合計が異なる"
+        ],
+        "answer": "正しい金額を誤った勘定科目に記入している",
+        "explanation": "貸借が一致していても、勘定科目の選択ミスや同額の逆仕訳などは残る可能性があります。試算表の一致は誤りがないことの完全な証明ではありません。",
+        "sourceTopicId": "7fc4ea63-02ee-4661-8e7b-70315b4e831c"
+      }
+    ],
+    "createdAt": "2026-06-07T09:56:57.759Z",
+    "updatedAt": "2026-06-07T09:56:57.759Z"
+  }
+]

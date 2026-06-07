@@ -1,0 +1,29 @@
+[
+  {
+    "id": "bf62bf13-0825-48d9-95f3-7c844a8d9b17",
+    "target": "HTML/CSS",
+    "priority": "high",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-06-07T09:32:18.525Z",
+    "updatedAt": "2026-06-07T09:32:18.525Z"
+  },
+  {
+    "id": "e775dd02-2803-4f1a-a2c7-e65e75212583",
+    "target": "自然言語処理",
+    "priority": "normal",
+    "status": "active",
+    "note": "一度ある程度は勉強している。復習目的",
+    "createdAt": "2026-06-07T09:32:52.313Z",
+    "updatedAt": "2026-06-07T09:32:52.313Z"
+  },
+  {
+    "id": "7fc4ea63-02ee-4661-8e7b-70315b4e831c",
+    "target": "簿記",
+    "priority": "normal",
+    "status": "active",
+    "note": "簿記三級",
+    "createdAt": "2026-06-07T09:33:10.818Z",
+    "updatedAt": "2026-06-07T09:33:10.818Z"
+  }
+]

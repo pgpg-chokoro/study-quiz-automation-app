@@ -1,0 +1,19 @@
+{
+  "name": "study-quiz-automation-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node src/server.js",
+    "start": "node src/server.js",
+    "check": "node --check src/schema.js && node --check src/data-store.js && node --check src/server.js && node --check public/app.js && node --check public/quizzes.js",
+    "test": "node --test tests/*.test.js && node scripts/validate-quiz-quality.mjs",
+    "validate:quiz": "node scripts/validate-quiz-quality.mjs",
+    "build:pages": "node scripts/build-pages-site.mjs",
+    "security:scan": "node scripts/security-scan.mjs",
+    "prepublish:check": "npm run build:pages && npm run check && npm test && npm run security:scan"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
