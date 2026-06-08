@@ -7,7 +7,7 @@
 - `data/study-topics.json`: 学習したい対象の一覧
 - `data/quiz-history.json`: 生成済みクイズセットの履歴
 
-どちらもJSON配列です。既存データは上書きせず、クイズ生成・改善の結果は `quiz-history.json` に追記します。
+どちらもJSON配列です。既存データは上書きせず、クイズ生成・改善の結果は `quiz-history.json` に追記します。Codex Cloudや自動化で作業する場合も、`study-topics.json` は入力元として読み取り、ユーザーから明示されない限り編集しません。
 
 ## 学習メモの扱い
 
@@ -105,4 +105,5 @@ activeな学習メモを対象に、targetを大分類として解釈し、細�
 テーマや難易度に応じて true-false / fill-blank / short-answer も使って構いません。
 既存履歴は削除・上書きせず、必ず追記してください。
 生成後は npm run validate:quiz を実行し、正答位置の偏り、解説不足、選択肢不備を確認してください。
+npm run validate:append-only も実行し、quiz-history.json が既存履歴を変更せず末尾追記だけになっていることを確認してください。
 ```
