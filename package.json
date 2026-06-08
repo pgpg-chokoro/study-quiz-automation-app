@@ -6,12 +6,13 @@
   "scripts": {
     "dev": "node src/server.js",
     "start": "node src/server.js",
-    "check": "node --check src/schema.js && node --check src/data-store.js && node --check src/server.js && node --check public/app.js && node --check public/quizzes.js",
+    "check": "node --check src/schema.js && node --check src/data-store.js && node --check src/server.js && node --check public/app.js && node --check public/quizzes.js && node --check scripts/validate-quiz-history-append-only.mjs && node --check scripts/validate-quiz-quality.mjs && node --check scripts/build-pages-site.mjs && node --check scripts/security-scan.mjs",
     "test": "node --test tests/*.test.js && node scripts/validate-quiz-quality.mjs",
     "validate:quiz": "node scripts/validate-quiz-quality.mjs",
     "build:pages": "node scripts/build-pages-site.mjs",
     "security:scan": "node scripts/security-scan.mjs",
-    "prepublish:check": "npm run build:pages && npm run check && npm test && npm run security:scan"
+    "prepublish:check": "npm run build:pages && npm run check && npm test && npm run validate:append-only && npm run security:scan",
+    "validate:append-only": "node scripts/validate-quiz-history-append-only.mjs"
   },
   "engines": {
     "node": ">=20"
