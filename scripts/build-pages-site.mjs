@@ -4,15 +4,32 @@ import path from "node:path";
 const siteDir = "docs";
 const siteDataDir = path.join(siteDir, "data");
 
+function attachTopicLabels(quizHistory, studyTopics) {
+  const topicLabels = new Map(studyTopics.map((topic) => [topic.id, topic.target]));
+
+  return quizHistory.map((quizSet) => ({
+    ...quizSet,
+    topicLabels: (quizSet.sourceTopicIds ?? []).map((topicId) => topicLabels.get(topicId) ?? topicId)
+  }));
+}
+
+function countGenres(quizHistory) {
+  return new Set(quizHistory.map((quizSet) => quizSet.sourceTopicIds?.[0] ?? "unknown")).size;
+}
+
 async function build() {
   await mkdir(siteDataDir, { recursive: true });
 
   await copyFile("public/styles.css", path.join(siteDir, "styles.css"));
   await copyFile("public/quizzes.js", path.join(siteDir, "quizzes.js"));
-  await copyFile("data/quiz-history.json", path.join(siteDataDir, "quiz-history.json"));
   await writeFile(path.join(siteDir, ".nojekyll"), "", "utf8");
 
   const quizHistory = JSON.parse(await readFile("data/quiz-history.json", "utf8"));
+  const studyTopics = JSON.parse(await readFile("data/study-topics.json", "utf8"));
+  const publicQuizHistory = attachTopicLabels(quizHistory, studyTopics);
+  await writeFile(path.join(siteDataDir, "quiz-history.json"), JSON.stringify(publicQuizHistory, null, 2) + "\n", "utf8");
+
+  const genreCount = countGenres(quizHistory);
   const quizCount = quizHistory.length;
   const questionCount = quizHistory.reduce((sum, quizSet) => sum + (quizSet.questions?.length ?? 0), 0);
 
@@ -42,8 +59,8 @@ async function build() {
     "      <section class=\"quiz-browser\" aria-labelledby=\"quiz-heading\">",
     "        <div class=\"section-heading\">",
     "          <div>",
-    "            <h2 id=\"quiz-heading\">クイズセット</h2>",
-    `            <p id="quiz-count">${quizCount}セット / ${questionCount}問</p>`,
+    "            <h2 id=\"quiz-heading\">ジャンル</h2>",
+    "            <p id=\"quiz-count\">" + genreCount + "ジャンル / " + quizCount + "セット / " + questionCount + "問</p>",
     "          </div>",
     "          <div class=\"filters\" aria-label=\"クイズフィルター\">",
     "            <select id=\"difficulty-filter\" aria-label=\"難易度\">",
@@ -79,7 +96,7 @@ async function build() {
   await writeFile(path.join(siteDir, "index.html"), html, "utf8");
   await writeFile(path.join(siteDir, "quizzes.html"), html, "utf8");
 
-  console.log(`Built ${siteDir} with ${quizCount} quiz sets and ${questionCount} questions.`);
+  console.log("Built " + siteDir + " with " + genreCount + " genres, " + quizCount + " quiz sets and " + questionCount + " questions.");
 }
 
 await build();

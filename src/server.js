@@ -29,6 +29,16 @@ const contentTypes = {
   ".js": "text/javascript; charset=utf-8"
 };
 
+function attachTopicLabels(quizHistory, studyTopics) {
+  const topicLabels = new Map(studyTopics.map((topic) => [topic.id, topic.target]));
+
+  return quizHistory.map((quizSet) => ({
+    ...quizSet,
+    topicLabels: (quizSet.sourceTopicIds ?? []).map((topicId) => topicLabels.get(topicId) ?? topicId)
+  }));
+}
+
+
 function sendJson(response, statusCode, payload) {
   response.writeHead(statusCode, {
     "content-type": "application/json; charset=utf-8",
@@ -112,7 +122,8 @@ async function handleApi(request, response, requestPath) {
   }
 
   if (request.method === "GET" && requestPath === "/api/quizzes") {
-    sendJson(response, 200, { quizHistory: await getQuizHistory() });
+    const [quizHistory, studyTopics] = await Promise.all([getQuizHistory(), getStudyTopics()]);
+    sendJson(response, 200, { quizHistory: attachTopicLabels(quizHistory, studyTopics) });
     return;
   }
 

@@ -2,11 +2,11 @@
   {
     "id": "bf62bf13-0825-48d9-95f3-7c844a8d9b17",
     "target": "HTML/CSS",
-    "priority": "high",
+    "priority": "low",
     "status": "active",
     "note": "",
     "createdAt": "2026-06-07T09:32:18.525Z",
-    "updatedAt": "2026-06-07T09:32:18.525Z"
+    "updatedAt": "2026-06-08T12:56:17.855Z"
   },
   {
     "id": "e775dd02-2803-4f1a-a2c7-e65e75212583",
@@ -25,5 +25,32 @@
     "note": "簿記三級",
     "createdAt": "2026-06-07T09:33:10.818Z",
     "updatedAt": "2026-06-07T09:33:10.818Z"
+  },
+  {
+    "id": "1160e823-43a5-47c6-9d5e-06560f184e1b",
+    "target": "セキュリティ",
+    "priority": "normal",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-06-08T12:55:55.939Z",
+    "updatedAt": "2026-06-08T12:55:55.939Z"
+  },
+  {
+    "id": "ed13aac7-bac1-4d97-901b-206bfaa31f76",
+    "target": "暗号理論",
+    "priority": "normal",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-06-08T12:56:03.012Z",
+    "updatedAt": "2026-06-08T12:56:03.012Z"
+  },
+  {
+    "id": "f9e5d902-ffa6-411c-ad74-158bf9c2de7a",
+    "target": "javascript",
+    "priority": "high",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-06-08T12:56:10.897Z",
+    "updatedAt": "2026-06-08T12:56:23.419Z"
   }
 ]

@@ -5,7 +5,8 @@
 ## 特徴
 
 - 複数の学習メモをファイル保存できます。
-- クイズ履歴を難易度別に確認できます。
+- クイズをジャンル別に表示し、ジャンル内の問題をまとめて回答できます。
+- 追加日・追加理由などの履歴情報は、問題本文とは別に確認できます。
 - データは `data/*.json` に保存されるため、Codexオートメーションが直接読み書きできます。
 - 初期版は外部パッケージなしで動作します。
 
@@ -35,6 +36,7 @@ JSONファイルはアプリとCodexオートメーションの共有データ�
 ```bash
 npm run check
 npm test
+npm run validate:duplicates
 ```
 
 ## Codexオートメーション
@@ -55,7 +57,7 @@ npm run build:pages
 npm run prepublish:check
 ```
 
-公開サイトにはクイズ回答ページと `docs/data/quiz-history.json` のみを含め、学習メモ `data/study-topics.json` は含めません。
+公開サイトにはクイズ回答ページと `docs/data/quiz-history.json` のみを含め、学習メモ `data/study-topics.json` は含めません。`docs/data/quiz-history.json` には、ジャンル表示に必要な学習対象名だけを `topicLabels` として含めます。
 
 ## Codex Cloud
 
