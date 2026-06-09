@@ -406,6 +406,12 @@ function updateProgress(questionItems, totalCount = questionItems.length) {
     "問 / 正答率 " +
     formatPercent(correctCount, results.length);
 
+  const progressBar = document.querySelector("#quiz-progress-bar");
+  if (progressBar) {
+    const answeredPercent = totalCount === 0 ? 0 : Math.round((results.length / totalCount) * 100);
+    progressBar.style.width = answeredPercent + "%";
+  }
+
   const position = document.querySelector("#question-position");
   if (position) {
     const currentNumber = totalCount === 0 ? 0 : state.currentQuestionIndex + 1;
@@ -606,7 +612,10 @@ function renderQuizHeader(title, totalCount, backButton) {
         id: "quiz-progress",
         className: "quiz-meta",
         text: "回答済み 0/" + totalCount + "問 / 正解 0問 / 正答率 0%"
-      })
+      }),
+      createElement("div", { className: "progress-track", "aria-hidden": "true" }, [
+        createElement("span", { id: "quiz-progress-bar", className: "progress-fill", style: "width: 0%" })
+      ])
     ]),
     backButton
   ]);

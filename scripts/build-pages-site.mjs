@@ -57,7 +57,7 @@ async function build() {
     "",
     "    <main class=\"quiz-workspace\">",
     "      <section class=\"quiz-browser\" aria-labelledby=\"quiz-heading\">",
-    "        <div class=\"section-heading\">",
+    "        <div class=\"section-heading toolbar-heading\">",
     "          <div>",
     "            <h2 id=\"quiz-heading\">ジャンル</h2>",
     "            <p id=\"quiz-count\">" + genreCount + "ジャンル / " + quizCount + "セット / " + questionCount + "問</p>",
