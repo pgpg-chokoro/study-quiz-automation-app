@@ -18,6 +18,7 @@ const labelMaps = {
   }
 };
 
+const choiceLabels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const initialParams = new URLSearchParams(window.location.search);
 const state = {
   quizHistory: [],
@@ -25,6 +26,7 @@ const state = {
   selectedSetId: initialParams.get("set") ?? "",
   difficultyFilter: "all",
   actionFilter: "all",
+  currentQuestionIndex: 0,
   answers: new Map()
 };
 
@@ -34,6 +36,7 @@ const elements = {
   quizCount: document.querySelector("#quiz-count"),
   difficultyFilter: document.querySelector("#difficulty-filter"),
   actionFilter: document.querySelector("#action-filter"),
+  resetFiltersButton: document.querySelector("#reset-filters-button"),
   refreshButton: document.querySelector("#refresh-button")
 };
 
@@ -80,6 +83,14 @@ function formatDate(value) {
     dateStyle: "medium",
     timeStyle: "short"
   }).format(date);
+}
+
+function formatPercent(correctCount, answeredCount) {
+  if (answeredCount === 0) {
+    return "0%";
+  }
+
+  return Math.round((correctCount / answeredCount) * 100) + "%";
 }
 
 function renderBadge(text, className = "") {
@@ -143,6 +154,19 @@ function getFilteredSets() {
     }))
     .filter((quizSet) => quizSet.questions.length > 0)
     .sort((a, b) => getSetDate(b) - getSetDate(a));
+}
+
+function hasActiveFilters() {
+  return state.difficultyFilter !== "all" || state.actionFilter !== "all";
+}
+
+function syncFilterControls() {
+  elements.difficultyFilter.value = state.difficultyFilter;
+  elements.actionFilter.value = state.actionFilter;
+
+  if (elements.resetFiltersButton) {
+    elements.resetFiltersButton.disabled = !hasActiveFilters();
+  }
 }
 
 function getGenreGroups() {
@@ -209,6 +233,7 @@ function updateUrl(next, pushHistory = true) {
 function selectGenre(genreId, pushHistory = true) {
   state.selectedGenreId = genreId;
   state.selectedSetId = "";
+  state.currentQuestionIndex = 0;
   updateUrl({ genre: genreId }, pushHistory);
   render();
 }
@@ -216,6 +241,7 @@ function selectGenre(genreId, pushHistory = true) {
 function selectSet(setId, pushHistory = true) {
   state.selectedSetId = setId;
   state.selectedGenreId = "";
+  state.currentQuestionIndex = 0;
   updateUrl({ set: setId }, pushHistory);
   render();
 }
@@ -223,12 +249,20 @@ function selectSet(setId, pushHistory = true) {
 function clearSelection() {
   state.selectedGenreId = "";
   state.selectedSetId = "";
+  state.currentQuestionIndex = 0;
   updateUrl({});
   render();
 }
 
 function getSortedBadges(values, map) {
   return [...values].filter(Boolean).map((value) => renderBadge(map[value] ?? value));
+}
+
+function renderStat(value, label) {
+  return createElement("div", { className: "stat-box" }, [
+    createElement("strong", { text: value }),
+    createElement("span", { text: label })
+  ]);
 }
 
 function renderHistoryPanel(quizSets) {
@@ -264,9 +298,12 @@ function renderHistoryPanel(quizSets) {
 
 function renderGenreList() {
   const groups = getGenreGroups();
+  const filteredSetCount = groups.reduce((sum, group) => sum + group.sets.length, 0);
+  const filteredQuestionCount = groups.reduce((sum, group) => sum + group.questionCount, 0);
+  const filterText = hasActiveFilters() ? " / 絞り込み中" : "";
   elements.quizContent.replaceChildren();
   elements.quizCount.textContent =
-    groups.length + "ジャンル / " + state.quizHistory.length + "セット / " + getQuestionCount(state.quizHistory) + "問";
+    groups.length + "ジャンル / " + filteredSetCount + "セット / " + filteredQuestionCount + "問" + filterText;
 
   if (state.quizHistory.length === 0) {
     elements.quizContent.append(
@@ -294,7 +331,7 @@ function renderGenreList() {
     const answerLink = createElement("a", {
       className: "primary-button inline-link",
       href: "quizzes.html?genre=" + encodeURIComponent(group.id),
-      text: "このジャンルを回答"
+      text: "回答する"
     });
     answerLink.addEventListener("click", (event) => {
       event.preventDefault();
@@ -303,12 +340,17 @@ function renderGenreList() {
 
     list.append(
       createElement("article", { className: "genre-card" }, [
-        createElement("h3", { text: group.label }),
-        createElement("div", { className: "quiz-meta" }, [
-          createElement("span", { text: group.sets.length + "セット" }),
-          createElement("span", { text: group.questionCount + "問" }),
-          createElement("span", { text: "最終追加: " + formatDate(group.latestAt) })
+        createElement("div", { className: "genre-card-header" }, [
+          createElement("div", {}, [
+            createElement("p", { className: "card-kicker", text: "ジャンル" }),
+            createElement("h3", { text: group.label })
+          ])
         ]),
+        createElement("div", { className: "genre-stats" }, [
+          renderStat(String(group.questionCount), "問題"),
+          renderStat(String(group.sets.length), "セット")
+        ]),
+        createElement("p", { className: "latest-label", text: "最終追加: " + formatDate(group.latestAt) }),
         createElement("div", { className: "question-meta" }, [
           ...getSortedBadges(group.difficulties, labelMaps.difficulty),
           ...getSortedBadges(group.actionTypes, labelMaps.actionType)
@@ -354,12 +396,26 @@ function updateProgress(questionItems, totalCount = questionItems.length) {
     .map(({ quizSet, question }) => state.answers.get(getQuestionKey(quizSet, question)))
     .filter(Boolean);
   const correctCount = results.filter((result) => result.correct).length;
-  progress.textContent = "回答済み " + results.length + "/" + totalCount + "問 / 正解 " + correctCount + "問";
+  progress.textContent =
+    "回答済み " +
+    results.length +
+    "/" +
+    totalCount +
+    "問 / 正解 " +
+    correctCount +
+    "問 / 正答率 " +
+    formatPercent(correctCount, results.length);
+
+  const position = document.querySelector("#question-position");
+  if (position) {
+    const currentNumber = totalCount === 0 ? 0 : state.currentQuestionIndex + 1;
+    position.textContent = "Q" + currentNumber + " / " + totalCount + " / 回答済み " + results.length + "問";
+  }
 }
 
 function renderFeedback(question, result) {
   if (!result) {
-    return createElement("p", { className: "answer-result pending", text: "未回答" });
+    return document.createDocumentFragment();
   }
 
   const children = [
@@ -377,19 +433,22 @@ function renderFeedback(question, result) {
     children.push(createElement("p", { className: "explanation", text: question.explanation }));
   }
 
-  return createElement("div", { className: "answer-feedback" }, children);
+  return createElement("div", { className: "answer-feedback", role: "status" }, children);
 }
 
 function renderChoiceQuestion(quizSet, question, result, resultNode, onAnswered) {
   const choices = Array.isArray(question.choices) ? question.choices : [];
   const list = createElement("div", { className: "choice-grid" });
 
-  for (const choice of choices) {
+  choices.forEach((choice, choiceIndex) => {
     const button = createElement("button", {
       className: "choice-button",
       type: "button",
-      text: choice
-    });
+      "aria-pressed": "false"
+    }, [
+      createElement("span", { className: "choice-marker", text: choiceLabels[choiceIndex] ?? String(choiceIndex + 1) }),
+      createElement("span", { className: "choice-text", text: choice })
+    ]);
 
     if (result && result.value === choice) {
       button.classList.add(result.correct ? "selected-correct" : "selected-wrong");
@@ -412,7 +471,7 @@ function renderChoiceQuestion(quizSet, question, result, resultNode, onAnswered)
     });
 
     list.append(button);
-  }
+  });
 
   return list;
 }
@@ -465,8 +524,7 @@ function renderQuestion(quizSet, question, index, options = {}) {
   const onAnswered = options.onAnswered ?? (() => updateSetProgress(quizSet));
   const children = [
     createElement("div", { className: "question-header" }, headerChildren),
-    createElement("p", { className: "question-prompt", text: question.prompt }),
-    resultNode
+    createElement("p", { className: "question-prompt", text: question.prompt })
   ];
 
   if (type === "multiple-choice" || type === "true-false") {
@@ -475,7 +533,8 @@ function renderQuestion(quizSet, question, index, options = {}) {
     children.push(renderTextQuestion(quizSet, question, result, resultNode, onAnswered));
   }
 
-  return createElement("article", { className: "question-card" }, children);
+  children.push(resultNode);
+  return createElement("article", { className: "question-card", tabindex: "-1", "data-current-question": "true" }, children);
 }
 
 function renderBackButton() {
@@ -488,36 +547,90 @@ function renderBackButton() {
   return backButton;
 }
 
-function renderSelectedGenre(genreId) {
-  const { sets, questionItems } = getGenreData(genreId);
-  const label = sets[0] ? getGenreLabel(sets[0]) : genreId;
-  elements.quizContent.replaceChildren();
-  elements.quizCount.textContent = label + " / " + sets.length + "セット / " + questionItems.length + "問";
+function clampQuestionIndex(totalCount) {
+  const maxIndex = Math.max(totalCount - 1, 0);
+  state.currentQuestionIndex = Math.min(Math.max(state.currentQuestionIndex, 0), maxIndex);
+}
 
-  const header = createElement("div", { className: "selected-quiz-header" }, [
-    createElement("div", {}, [
-      createElement("h2", { text: label }),
+function setCurrentQuestion(index, totalCount) {
+  clampQuestionIndex(totalCount);
+  state.currentQuestionIndex = Math.min(Math.max(index, 0), Math.max(totalCount - 1, 0));
+  render();
+  requestAnimationFrame(() => {
+    document.querySelector("[data-current-question]")?.focus();
+  });
+}
+
+function renderQuestionNavigation(questionItems) {
+  const totalCount = questionItems.length;
+  const answeredCount = questionItems
+    .map(({ quizSet, question }) => state.answers.get(getQuestionKey(quizSet, question)))
+    .filter(Boolean).length;
+  const currentNumber = totalCount === 0 ? 0 : state.currentQuestionIndex + 1;
+  const previousButton = createElement("button", {
+    className: "secondary-button",
+    type: "button",
+    text: "前へ",
+    disabled: state.currentQuestionIndex <= 0
+  });
+  const nextButton = createElement("button", {
+    className: "primary-button",
+    type: "button",
+    text: "次へ",
+    disabled: totalCount === 0 || state.currentQuestionIndex >= totalCount - 1
+  });
+
+  previousButton.addEventListener("click", () => setCurrentQuestion(state.currentQuestionIndex - 1, totalCount));
+  nextButton.addEventListener("click", () => setCurrentQuestion(state.currentQuestionIndex + 1, totalCount));
+
+  return createElement("nav", { className: "question-nav", "aria-label": "問題ナビゲーション" }, [
+    previousButton,
+    createElement("p", {
+      id: "question-position",
+      className: "question-position",
+      text: "Q" + currentNumber + " / " + totalCount + " / 回答済み " + answeredCount + "問"
+    }),
+    nextButton
+  ]);
+}
+
+function renderQuizHeader(title, totalCount, backButton) {
+  return createElement("div", { className: "selected-quiz-header" }, [
+    createElement("div", { className: "selected-title" }, [
+      createElement("p", { className: "card-kicker", text: "回答中" }),
+      createElement("h2", { text: title })
+    ]),
+    createElement("div", { className: "progress-panel" }, [
+      createElement("span", { className: "progress-label", text: "進捗" }),
       createElement("p", {
         id: "quiz-progress",
         className: "quiz-meta",
-        text: "回答済み 0/" + questionItems.length + "問 / 正解 0問"
+        text: "回答済み 0/" + totalCount + "問 / 正解 0問 / 正答率 0%"
       })
     ]),
-    renderBackButton()
+    backButton
   ]);
+}
 
-  const questionList = createElement(
-    "div",
-    { className: "question-list" },
-    questionItems.map(({ quizSet, question }, index) =>
-      renderQuestion(quizSet, question, index, {
-        contextLabel: quizSet.title,
+function renderSelectedGenre(genreId) {
+  const { sets, questionItems } = getGenreData(genreId);
+  const label = sets[0] ? getGenreLabel(sets[0]) : genreId;
+  clampQuestionIndex(questionItems.length);
+  elements.quizContent.replaceChildren();
+  elements.quizCount.textContent = label + " / " + sets.length + "セット / " + questionItems.length + "問";
+
+  const header = renderQuizHeader(label, questionItems.length, renderBackButton());
+  const questionList = createElement("div", { className: "question-list" });
+  const currentItem = questionItems[state.currentQuestionIndex];
+
+  if (currentItem) {
+    questionList.append(
+      renderQuestion(currentItem.quizSet, currentItem.question, state.currentQuestionIndex, {
+        contextLabel: currentItem.quizSet.title,
         onAnswered: () => updateProgress(questionItems)
       })
-    )
-  );
-
-  if (questionItems.length === 0) {
+    );
+  } else {
     questionList.append(
       createElement("p", {
         className: "empty",
@@ -530,7 +643,8 @@ function renderSelectedGenre(genreId) {
     createElement("section", { className: "selected-quiz" }, [
       header,
       renderHistoryPanel(sets),
-      questionList
+      questionList,
+      renderQuestionNavigation(questionItems)
     ])
   );
   updateProgress(questionItems);
@@ -539,28 +653,18 @@ function renderSelectedGenre(genreId) {
 function renderSelectedSet(quizSet) {
   const filteredQuestions = getFilteredQuestions(quizSet);
   const filteredSet = { ...quizSet, questions: filteredQuestions };
+  const questionItems = filteredQuestions.map((question) => ({ quizSet: filteredSet, question }));
+  clampQuestionIndex(filteredQuestions.length);
   elements.quizContent.replaceChildren();
   elements.quizCount.textContent = quizSet.title + " / " + filteredQuestions.length + "問";
 
-  const header = createElement("div", { className: "selected-quiz-header" }, [
-    createElement("div", {}, [
-      createElement("h2", { text: quizSet.title }),
-      createElement("p", {
-        id: "quiz-progress",
-        className: "quiz-meta",
-        text: "回答済み 0/" + filteredQuestions.length + "問 / 正解 0問"
-      })
-    ]),
-    renderBackButton()
-  ]);
+  const header = renderQuizHeader(quizSet.title, filteredQuestions.length, renderBackButton());
+  const questionList = createElement("div", { className: "question-list" });
+  const currentQuestion = filteredQuestions[state.currentQuestionIndex];
 
-  const questionList = createElement(
-    "div",
-    { className: "question-list" },
-    filteredQuestions.map((question, index) => renderQuestion(filteredSet, question, index))
-  );
-
-  if (filteredQuestions.length === 0) {
+  if (currentQuestion) {
+    questionList.append(renderQuestion(filteredSet, currentQuestion, state.currentQuestionIndex));
+  } else {
     questionList.append(
       createElement("p", {
         className: "empty",
@@ -573,13 +677,15 @@ function renderSelectedSet(quizSet) {
     createElement("section", { className: "selected-quiz" }, [
       header,
       renderHistoryPanel([quizSet]),
-      questionList
+      questionList,
+      renderQuestionNavigation(questionItems)
     ])
   );
   updateSetProgress(filteredSet);
 }
 
 function render() {
+  syncFilterControls();
   const selectedSet = state.quizHistory.find((quizSet) => quizSet.id === state.selectedSetId);
 
   if (state.selectedSetId && selectedSet) {
@@ -604,16 +710,25 @@ elements.refreshButton.addEventListener("click", () => {
 });
 elements.difficultyFilter.addEventListener("change", (event) => {
   state.difficultyFilter = event.target.value;
+  state.currentQuestionIndex = 0;
   render();
 });
 elements.actionFilter.addEventListener("change", (event) => {
   state.actionFilter = event.target.value;
+  state.currentQuestionIndex = 0;
+  render();
+});
+elements.resetFiltersButton?.addEventListener("click", () => {
+  state.difficultyFilter = "all";
+  state.actionFilter = "all";
+  state.currentQuestionIndex = 0;
   render();
 });
 window.addEventListener("popstate", () => {
   const params = new URLSearchParams(window.location.search);
   state.selectedGenreId = params.get("genre") ?? "";
   state.selectedSetId = params.get("set") ?? "";
+  state.currentQuestionIndex = 0;
   render();
 });
 

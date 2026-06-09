@@ -21,13 +21,15 @@
     </header>
 
     <main class="memo-workspace">
-      <section class="topic-pane" aria-labelledby="topic-heading">
-        <div class="section-heading">
+      <section class="topic-pane form-pane" aria-labelledby="topic-heading">
+        <div class="section-heading compact-heading">
           <div>
             <h2 id="topic-heading">学習メモ</h2>
-            <p id="topic-count">0件</p>
+            <p>学びたい大まかなジャンルを登録</p>
           </div>
         </div>
+
+        <p id="form-mode" class="form-mode">新規メモ</p>
 
         <form id="topic-form" class="topic-form">
           <input type="hidden" id="topic-id">
@@ -69,6 +71,15 @@
         </form>
 
         <div id="topic-error" class="message error" hidden></div>
+      </section>
+
+      <section class="topic-pane list-pane" aria-labelledby="topic-list-heading">
+        <div class="section-heading list-heading">
+          <div>
+            <h2 id="topic-list-heading">登録済みメモ</h2>
+            <p id="topic-count">0件</p>
+          </div>
+        </div>
         <div id="topic-list" class="topic-list" aria-live="polite"></div>
       </section>
     </main>

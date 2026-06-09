@@ -11,6 +11,12 @@ const labelMaps = {
   }
 };
 
+const priorityOrder = {
+  high: 0,
+  normal: 1,
+  low: 2
+};
+
 const state = {
   topics: [],
   editingTopicId: ""
@@ -25,6 +31,7 @@ const elements = {
   note: document.querySelector("#note"),
   saveTopicButton: document.querySelector("#save-topic-button"),
   cancelEditButton: document.querySelector("#cancel-edit-button"),
+  formMode: document.querySelector("#form-mode"),
   topicError: document.querySelector("#topic-error"),
   topicList: document.querySelector("#topic-list"),
   topicCount: document.querySelector("#topic-count"),
@@ -130,6 +137,8 @@ function resetForm() {
   elements.status.value = "active";
   elements.saveTopicButton.textContent = "保存";
   elements.cancelEditButton.hidden = true;
+  elements.formMode.textContent = "新規メモ";
+  elements.formMode.classList.remove("editing");
 }
 
 function startEditingTopic(topic) {
@@ -141,6 +150,8 @@ function startEditingTopic(topic) {
   elements.note.value = getTopicNote(topic);
   elements.saveTopicButton.textContent = "更新";
   elements.cancelEditButton.hidden = false;
+  elements.formMode.textContent = "編集中: " + getTopicTarget(topic);
+  elements.formMode.classList.add("editing");
   elements.target.focus();
 }
 
@@ -193,9 +204,50 @@ function renderBadge(text, className = "") {
   });
 }
 
+function getTopicSummary() {
+  const total = state.topics.length;
+  const active = state.topics.filter((topic) => topic.status === "active").length;
+  const high = state.topics.filter((topic) => topic.priority === "high").length;
+  return total + "件 / 学習中 " + active + "件 / 高優先 " + high + "件";
+}
+
+function getTopicSortKey(topic) {
+  return [
+    priorityOrder[topic.priority] ?? 9,
+    -(new Date(topic.updatedAt ?? topic.createdAt ?? 0).getTime())
+  ];
+}
+
+function compareTopics(a, b) {
+  const [priorityA, dateA] = getTopicSortKey(a);
+  const [priorityB, dateB] = getTopicSortKey(b);
+  return priorityA - priorityB || dateA - dateB;
+}
+
+function renderTopicActions(topic) {
+  const actions = createElement("div", { className: "item-actions" });
+  const editButton = createElement("button", {
+    className: "secondary-button compact-button",
+    type: "button",
+    text: "編集",
+    "aria-label": getTopicTarget(topic) + "を編集"
+  });
+  editButton.addEventListener("click", () => startEditingTopic(topic));
+
+  const deleteButton = createElement("button", {
+    className: "danger-button compact-button",
+    type: "button",
+    text: "削除",
+    "aria-label": getTopicTarget(topic) + "を削除"
+  });
+  deleteButton.addEventListener("click", () => removeTopic(topic));
+  actions.append(editButton, deleteButton);
+  return actions;
+}
+
 function renderTopics() {
   elements.topicList.replaceChildren();
-  elements.topicCount.textContent = state.topics.length + "件";
+  elements.topicCount.textContent = getTopicSummary();
 
   if (state.topics.length === 0) {
     elements.topicList.append(
@@ -207,11 +259,7 @@ function renderTopics() {
     return;
   }
 
-  const sortedTopics = [...state.topics].sort((a, b) => {
-    const dateA = new Date(a.updatedAt ?? a.createdAt ?? 0).getTime();
-    const dateB = new Date(b.updatedAt ?? b.createdAt ?? 0).getTime();
-    return dateB - dateA;
-  });
+  const sortedTopics = [...state.topics].sort(compareTopics);
 
   for (const topic of sortedTopics) {
     const meta = createElement("div", { className: "topic-meta" }, [
@@ -219,41 +267,29 @@ function renderTopics() {
       renderBadge(labelMaps.status[topic.status] ?? topic.status, "status-" + topic.status)
     ]);
 
-    const actions = createElement("div", { className: "item-actions" });
-    const editButton = createElement("button", {
-      className: "secondary-button",
-      type: "button",
-      text: "編集"
-    });
-    editButton.addEventListener("click", () => startEditingTopic(topic));
-
-    const deleteButton = createElement("button", {
-      className: "danger-button",
-      type: "button",
-      text: "削除"
-    });
-    deleteButton.addEventListener("click", () => removeTopic(topic));
-    actions.append(editButton, deleteButton);
-
     const note = getTopicNote(topic);
-    const children = [
-      createElement("h3", { text: getTopicTarget(topic) }),
-      meta
+    const body = [
+      createElement("div", { className: "topic-card-header" }, [
+        createElement("div", {}, [
+          createElement("h3", { text: getTopicTarget(topic) }),
+          meta
+        ]),
+        renderTopicActions(topic)
+      ])
     ];
 
     if (note) {
-      children.push(createElement("p", { className: "topic-note", text: note }));
+      body.push(createElement("p", { className: "topic-note", text: note }));
     }
 
-    children.push(
+    body.push(
       createElement("p", {
-        className: "topic-meta",
+        className: "topic-updated",
         text: "更新: " + formatDate(topic.updatedAt)
-      }),
-      actions
+      })
     );
 
-    elements.topicList.append(createElement("article", { className: "topic-card" }, children));
+    elements.topicList.append(createElement("article", { className: "topic-card" }, body));
   }
 }
 
