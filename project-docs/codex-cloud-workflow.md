@@ -24,6 +24,8 @@ npm run prepublish:check
 - `npm run check`: JavaScript構文チェック
 - `npm test`: データ保存テストとクイズ品質チェック
 - `npm run validate:append-only`: `data/quiz-history.json` が既存履歴を変更せず末尾追記だけになっているか確認
+- `npm run validate:review`: `data/quiz-review.json` の参照先と形式を確認
+- `npm run review:quiz`: 類似問題、解説不足、難易度の偏りなどのレビュー候補を出力
 - `npm run security:scan`: 秘密情報・個人情報らしき文字列と公開サイト混入を確認
 
 ## Codex Cloudでクイズ生成・改善する手順
@@ -40,6 +42,8 @@ npm run prepublish:check
 - `data/study-topics.json` は入力元として扱い、ユーザーから明示されない限り編集しません。
 - `data/quiz-history.json` の既存クイズセットは削除・上書き・並べ替えせず、必ず末尾へ追記します。
 - 改善版を作る場合は `actionType: "improve"` とし、`improvedFromQuizSetId` に元クイズセットIDを入れます。
+- 類似問題や品質不安の扱いは `data/quiz-review.json` に記録し、既存の `data/quiz-history.json` から削除しません。
+- 公開対象から外す場合は `decision: "hide"` を使います。履歴は残り、GitHub Pages向けデータからだけ除外されます。
 - PRではCIの `prepublish-check` が通っていることを確認します。
 
 ## 生成プロンプト
@@ -67,6 +71,7 @@ data/study-topics.json は編集せず、data/quiz-history.json は既存履歴�
 このPRで data/quiz-history.json に追加されたクイズセットだけをレビューしてください。PR差分を見られない場合は、配列末尾の新規追加分を対象にしてください。
 コード変更はせず、内容の自然さ、難易度の妥当性、選択肢の紛らわしさ、解説の品質、既存履歴が変更されていないことを確認してください。
 問題があれば、クイズセット名、Q番号、問題点、改善案を短く箇条書きで報告してください。
+似た問題がある場合は、どちらを `keep` として残し、どちらを `hide` 候補にするかも提案してください。
 問題がなければ、その旨を明記してください。
 ```
 

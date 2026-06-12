@@ -12,10 +12,16 @@ const labelMaps = {
     "short-answer": "短答式"
   },
   actionType: {
-    create: "新規作成",
-    expand: "追加",
-    improve: "改善"
+    create: "初回セット",
+    expand: "新規観点",
+    improve: "改善版"
   }
+};
+
+const actionDescriptions = {
+  create: "このジャンルの初回生成",
+  expand: "未出題テーマを追加",
+  improve: "既存問題を改善"
 };
 
 const choiceLabels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -273,6 +279,7 @@ function renderHistoryPanel(quizSets) {
   for (const quizSet of quizSets) {
     const meta = [
       renderBadge(labelMaps.actionType[quizSet.actionType] ?? quizSet.actionType),
+      createElement("span", { text: actionDescriptions[quizSet.actionType] ?? "作成目的未設定" }),
       createElement("span", { text: "追加日: " + formatDate(quizSet.createdAt) })
     ];
 

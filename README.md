@@ -28,8 +28,9 @@ PORT=3001 npm run dev
 
 - `data/study-topics.json`: 学習メモ一覧
 - `data/quiz-history.json`: クイズ生成・改善履歴
+- `data/quiz-review.json`: クイズのレビュー判定
 
-JSONファイルはアプリとCodexオートメーションの共有データです。手動編集する場合は、配列形式を維持してください。
+JSONファイルはアプリとCodexオートメーションの共有データです。手動編集する場合は、各ファイルの形式を維持してください。
 
 ## 検証コマンド
 
@@ -37,6 +38,8 @@ JSONファイルはアプリとCodexオートメーションの共有データ�
 npm run check
 npm test
 npm run validate:duplicates
+npm run validate:review
+npm run review:quiz
 ```
 
 ## Codexオートメーション
@@ -57,7 +60,7 @@ npm run build:pages
 npm run prepublish:check
 ```
 
-公開サイトにはクイズ回答ページと `docs/data/quiz-history.json` のみを含め、学習メモ `data/study-topics.json` は含めません。`docs/data/quiz-history.json` には、ジャンル表示に必要な学習対象名だけを `topicLabels` として含めます。
+公開サイトにはクイズ回答ページと `docs/data/quiz-history.json` のみを含め、学習メモ `data/study-topics.json` は含めません。`docs/data/quiz-history.json` には、ジャンル表示に必要な学習対象名だけを `topicLabels` として含めます。`data/quiz-review.json` で `decision: "hide"` にしたクイズセットや問題は、履歴を残したまま公開データから除外されます。
 
 ## Codex Cloud
 

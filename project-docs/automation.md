@@ -6,8 +6,9 @@
 
 - `data/study-topics.json`: 学習したい対象の一覧
 - `data/quiz-history.json`: 生成済みクイズセットの履歴
+- `data/quiz-review.json`: 公開可否や改善要否のレビュー判定
 
-どちらもJSON配列です。既存データは上書きせず、クイズ生成・改善の結果は `quiz-history.json` に追記します。Codex Cloudや自動化で作業する場合も、`study-topics.json` は入力元として読み取り、ユーザーから明示されない限り編集しません。
+`study-topics.json` と `quiz-history.json` はJSON配列です。既存データは上書きせず、クイズ生成・改善の結果は `quiz-history.json` に追記します。Codex Cloudや自動化で作業する場合も、`study-topics.json` は入力元として読み取り、ユーザーから明示されない限り編集しません。`quiz-review.json` は履歴を消さずに公開対象を調整するための判定ファイルです。
 
 ## 学習メモの扱い
 
@@ -93,6 +94,20 @@ Codexは `status` が `active` のメモを主な対象にします。
 - 解説には「なぜ正しいか」と「誤答しやすい点」を含める。
 - 大まかな対象から、基礎用語、実務例、典型ミス、比較、例外ケースまで広げる。
 - 超上級では単なる暗記ではなく、設計判断、攻撃シナリオ、トレードオフ、応用を問う。
+
+## クイズレビュー判定
+
+似た問題や品質に不安がある問題は、`data/quiz-history.json` から削除せず、`data/quiz-review.json` に判定を記録します。
+
+判定の `decision` は以下を使います。
+
+- `keep`: 似た問題の代表として残す。
+- `hide`: 履歴には残すが、GitHub Pages向けの公開データから除外する。
+- `needs-improvement`: 公開は継続するが、改善候補として記録する。
+
+`scope` は `quiz-set` または `question` を使います。`question` の場合は `quizSetId` と `questionId` の両方が必要です。`hide` と `needs-improvement` には、必ず `reason` を書きます。
+
+公開サイト生成時は、`hide` 判定のクイズセットや問題だけを除外します。`quiz-history.json` の既存履歴は変更しません。
 
 ## 推奨される自動化プロンプト
 

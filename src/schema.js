@@ -25,9 +25,9 @@ export const PRIORITIES = [
 ];
 
 export const QUIZ_ACTION_TYPES = [
-  { value: "create", label: "新規作成" },
-  { value: "expand", label: "追加" },
-  { value: "improve", label: "改善" }
+  { value: "create", label: "初回セット" },
+  { value: "expand", label: "新規観点" },
+  { value: "improve", label: "改善版" }
 ];
 
 export class ValidationError extends Error {

@@ -1,5 +1,6 @@
 import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { applyQuizReview, createEmptyQuizReview, validateQuizReview } from "../src/quiz-review.js";
 
 const siteDir = "docs";
 const siteDataDir = path.join(siteDir, "data");
@@ -17,6 +18,17 @@ function countGenres(quizHistory) {
   return new Set(quizHistory.map((quizSet) => quizSet.sourceTopicIds?.[0] ?? "unknown")).size;
 }
 
+async function readQuizReview() {
+  try {
+    return JSON.parse(await readFile("data/quiz-review.json", "utf8"));
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      return createEmptyQuizReview();
+    }
+    throw error;
+  }
+}
+
 async function build() {
   await mkdir(siteDataDir, { recursive: true });
 
@@ -26,12 +38,20 @@ async function build() {
 
   const quizHistory = JSON.parse(await readFile("data/quiz-history.json", "utf8"));
   const studyTopics = JSON.parse(await readFile("data/study-topics.json", "utf8"));
-  const publicQuizHistory = attachTopicLabels(quizHistory, studyTopics);
+  const quizReview = await readQuizReview();
+  const reviewIssues = validateQuizReview(quizReview, quizHistory);
+  if (reviewIssues.length > 0) {
+    throw new Error("quiz-review.json is invalid:\n- " + reviewIssues.join("\n- "));
+  }
+
+  const reviewResult = applyQuizReview(quizHistory, quizReview);
+  const reviewedQuizHistory = reviewResult.quizHistory;
+  const publicQuizHistory = attachTopicLabels(reviewedQuizHistory, studyTopics);
   await writeFile(path.join(siteDataDir, "quiz-history.json"), JSON.stringify(publicQuizHistory, null, 2) + "\n", "utf8");
 
-  const genreCount = countGenres(quizHistory);
-  const quizCount = quizHistory.length;
-  const questionCount = quizHistory.reduce((sum, quizSet) => sum + (quizSet.questions?.length ?? 0), 0);
+  const genreCount = countGenres(reviewedQuizHistory);
+  const quizCount = reviewedQuizHistory.length;
+  const questionCount = reviewedQuizHistory.reduce((sum, quizSet) => sum + (quizSet.questions?.length ?? 0), 0);
 
   const html = [
     "<!doctype html>",
@@ -70,11 +90,11 @@ async function build() {
     "              <option value=\"advanced\">上級</option>",
     "              <option value=\"expert\">超上級</option>",
     "            </select>",
-    "            <select id=\"action-filter\" aria-label=\"生成種別\">",
-    "              <option value=\"all\">全種別</option>",
-    "              <option value=\"create\">新規作成</option>",
-    "              <option value=\"expand\">追加</option>",
-    "              <option value=\"improve\">改善</option>",
+    "            <select id=\"action-filter\" aria-label=\"作成目的\">",
+    "              <option value=\"all\">全セット</option>",
+    "              <option value=\"create\">初回セット</option>",
+    "              <option value=\"expand\">新規観点</option>",
+    "              <option value=\"improve\">改善版</option>",
     "            </select>",
     "            <button id=\"reset-filters-button\" class=\"secondary-button filter-reset\" type=\"button\" disabled>リセット</button>",
     "          </div>",
@@ -97,7 +117,7 @@ async function build() {
   await writeFile(path.join(siteDir, "index.html"), html, "utf8");
   await writeFile(path.join(siteDir, "quizzes.html"), html, "utf8");
 
-  console.log("Built " + siteDir + " with " + genreCount + " genres, " + quizCount + " quiz sets and " + questionCount + " questions.");
+  console.log("Built " + siteDir + " with " + genreCount + " genres, " + quizCount + " quiz sets and " + questionCount + " questions. Hidden by review: " + reviewResult.hiddenSetCount + " sets, " + reviewResult.hiddenQuestionCount + " questions.");
 }
 
 await build();

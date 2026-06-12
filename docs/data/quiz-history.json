@@ -164,36 +164,6 @@
     "generationReason": "簿記三級の補足に合わせ、商業簿記の基礎、仕訳、決算整理、試験で混乱しやすい判断を初回範囲にした。",
     "questions": [
       {
-        "id": "616a6674-a7bb-42ae-bd2c-a88888c66c9f-q1",
-        "difficulty": "beginner",
-        "type": "multiple-choice",
-        "prompt": "簿記で、現金が増加したときの基本的な記入位置はどれですか？",
-        "choices": [
-          "貸方",
-          "摘要欄のみ",
-          "記入しない",
-          "借方"
-        ],
-        "answer": "借方",
-        "explanation": "現金は資産です。資産の増加は借方、資産の減少は貸方に記入します。",
-        "sourceTopicId": "7fc4ea63-02ee-4661-8e7b-70315b4e831c"
-      },
-      {
-        "id": "616a6674-a7bb-42ae-bd2c-a88888c66c9f-q2",
-        "difficulty": "intermediate",
-        "type": "multiple-choice",
-        "prompt": "商品を掛けで販売した場合の基本的な仕訳として最も適切なものはどれですか？",
-        "choices": [
-          "借方 仕入 / 貸方 買掛金",
-          "借方 売掛金 / 貸方 売上",
-          "借方 現金 / 貸方 借入金",
-          "借方 売上 / 貸方 売掛金"
-        ],
-        "answer": "借方 売掛金 / 貸方 売上",
-        "explanation": "掛け販売では代金を後で受け取る権利である売掛金が増え、売上が発生します。",
-        "sourceTopicId": "7fc4ea63-02ee-4661-8e7b-70315b4e831c"
-      },
-      {
         "id": "616a6674-a7bb-42ae-bd2c-a88888c66c9f-q3",
         "difficulty": "advanced",
         "type": "multiple-choice",
@@ -1152,6 +1122,391 @@
     "updatedAt": "2026-06-09T04:51:30.003Z",
     "topicLabels": [
       "javascript"
+    ]
+  },
+  {
+    "id": "c27a8234-180b-477a-8c13-9ec110e0cb9d",
+    "title": "簿記3級 解説強化クイズ 3",
+    "actionType": "improve",
+    "sourceTopicIds": [
+      "7fc4ea63-02ee-4661-8e7b-70315b4e831c"
+    ],
+    "improvedFromQuizSetId": "616a6674-a7bb-42ae-bd2c-a88888c66c9f",
+    "generationReason": "レビュー判定で解説強化が必要とされた現金・掛け販売の問題を、仕訳の理由と誤答しやすい勘定科目の違いまで確認できる形に改善した。",
+    "questions": [
+      {
+        "id": "auto-20260612-boki-improve-q1",
+        "difficulty": "beginner",
+        "type": "multiple-choice",
+        "prompt": "商品を現金で販売したとき、現金勘定と売上勘定の基本的な仕訳はどれですか？",
+        "choices": [
+          "借方 売上 / 貸方 現金",
+          "借方 現金 / 貸方 売上",
+          "借方 仕入 / 貸方 現金",
+          "借方 現金 / 貸方 買掛金"
+        ],
+        "answer": "借方 現金 / 貸方 売上",
+        "explanation": "現金は資産なので増加すると借方に記入します。一方、売上は収益なので発生すると貸方に記入します。現金が増えたから貸方に置く、という誤解を避けるのがポイントです。",
+        "sourceTopicId": "7fc4ea63-02ee-4661-8e7b-70315b4e831c"
+      },
+      {
+        "id": "auto-20260612-boki-improve-q2",
+        "difficulty": "intermediate",
+        "type": "multiple-choice",
+        "prompt": "掛けで販売した商品の代金を後日現金で回収したとき、最も適切な仕訳はどれですか？",
+        "choices": [
+          "借方 現金 / 貸方 売掛金",
+          "借方 売掛金 / 貸方 売上",
+          "借方 買掛金 / 貸方 現金",
+          "借方 仕入 / 貸方 現金"
+        ],
+        "answer": "借方 現金 / 貸方 売掛金",
+        "explanation": "販売時には売掛金が増えますが、回収時には現金が増え、売掛金という受け取る権利が減ります。売上は販売時に記録済みなので、回収時にもう一度売上を貸方に置かない点が誤答しやすいところです。",
+        "sourceTopicId": "7fc4ea63-02ee-4661-8e7b-70315b4e831c"
+      },
+      {
+        "id": "auto-20260612-boki-improve-q3",
+        "difficulty": "advanced",
+        "type": "multiple-choice",
+        "prompt": "商品を掛けで仕入れた場合、販売時の掛け取引と反対に注意すべき組み合わせはどれですか？",
+        "choices": [
+          "借方 仕入 / 貸方 買掛金",
+          "借方 売掛金 / 貸方 売上",
+          "借方 現金 / 貸方 売上",
+          "借方 買掛金 / 貸方 仕入"
+        ],
+        "answer": "借方 仕入 / 貸方 買掛金",
+        "explanation": "掛け仕入では費用である仕入が借方、後で支払う義務である買掛金が貸方です。売掛金は販売側の受け取る権利、買掛金は仕入側の支払義務なので、名前が似ていても方向が異なります。",
+        "sourceTopicId": "7fc4ea63-02ee-4661-8e7b-70315b4e831c"
+      },
+      {
+        "id": "auto-20260612-boki-improve-q4",
+        "difficulty": "expert",
+        "type": "multiple-choice",
+        "prompt": "掛け販売を「借方 売上 / 貸方 売掛金」と逆に記録した場合の主な問題として最も適切なものはどれですか？",
+        "choices": [
+          "貸借は一致しても、収益と資産を逆方向に減らす誤りになる",
+          "貸借が必ず一致しなくなるため、試算表だけで完全に発見できる",
+          "現金取引として処理されるため、売掛金には影響しない",
+          "決算整理仕訳で必ず自動的に正しい仕訳へ戻る"
+        ],
+        "answer": "貸借は一致しても、収益と資産を逆方向に減らす誤りになる",
+        "explanation": "借方と貸方の金額が同じなら試算表の合計は一致することがあります。しかし売上を借方、売掛金を貸方にすると、本来増える収益と資産を逆方向に記録するため、内容としては誤りです。貸借一致だけで安心しないことが重要です。",
+        "sourceTopicId": "7fc4ea63-02ee-4661-8e7b-70315b4e831c"
+      }
+    ],
+    "createdAt": "2026-06-12T03:23:04.261Z",
+    "updatedAt": "2026-06-12T03:23:04.261Z",
+    "topicLabels": [
+      "簿記"
+    ]
+  },
+  {
+    "id": "64bcc26f-8d8b-4196-bc1e-e8dcecbf8dab",
+    "title": "JavaScript 非同期処理 追加クイズ 2",
+    "actionType": "expand",
+    "sourceTopicIds": [
+      "f9e5d902-ffa6-411c-ad74-158bf9c2de7a"
+    ],
+    "improvedFromQuizSetId": "",
+    "generationReason": "高優先度のJavaScriptメモに対し、既存のthis・TDZ・Promise.allから範囲を広げ、async関数、microtask/task、allSettled、AbortControllerの実務的な判断を追加した。",
+    "questions": [
+      {
+        "id": "auto-20260612-js-async-q1",
+        "difficulty": "beginner",
+        "type": "multiple-choice",
+        "prompt": "async function の中で return 42; と書いた場合、呼び出し側が受け取る値として最も適切なものはどれですか？",
+        "choices": [
+          "数値42そのもの",
+          "42でfulfilledされるPromise",
+          "常にundefined",
+          "return文はSyntaxErrorになる"
+        ],
+        "answer": "42でfulfilledされるPromise",
+        "explanation": "async関数は常にPromiseを返します。returnした通常の値は、その値でfulfilledされるPromiseに包まれます。同期関数と同じ感覚で数値そのものが返ると考えると誤りです。",
+        "sourceTopicId": "f9e5d902-ffa6-411c-ad74-158bf9c2de7a"
+      },
+      {
+        "id": "auto-20260612-js-async-q2",
+        "difficulty": "intermediate",
+        "type": "multiple-choice",
+        "prompt": "同期処理中に Promise.resolve().then(...) と setTimeout(..., 0) を登録した場合、一般的な実行順として最も適切なものはどれですか？",
+        "choices": [
+          "setTimeoutのコールバックが必ず先に実行される",
+          "同期処理が終わった後、microtaskのthenが先に実行され、その後taskのsetTimeoutが実行される",
+          "登録順に関係なくランダムに実行される",
+          "Promiseのthenは次回ページ読み込みまで実行されない"
+        ],
+        "answer": "同期処理が終わった後、microtaskのthenが先に実行され、その後taskのsetTimeoutが実行される",
+        "explanation": "Promiseのthenはmicrotaskとして扱われ、現在の同期処理が終わった後、taskであるsetTimeoutより先に処理されます。setTimeoutの待ち時間0は即時実行ではなく、taskキューに入るという点が誤答しやすいところです。",
+        "sourceTopicId": "f9e5d902-ffa6-411c-ad74-158bf9c2de7a"
+      },
+      {
+        "id": "auto-20260612-js-async-q3",
+        "difficulty": "advanced",
+        "type": "multiple-choice",
+        "prompt": "複数の非同期処理について、成功・失敗の両方を最後まで集計したい場合に適したAPIはどれですか？",
+        "choices": [
+          "Promise.race()",
+          "Promise.allSettled()",
+          "Array.prototype.map()",
+          "queueMicrotask()"
+        ],
+        "answer": "Promise.allSettled()",
+        "explanation": "Promise.allSettled()はすべてのPromiseがfulfilledまたはrejectedになるまで待ち、各結果をstatus付きで返します。Promise.all()は1つrejectされると全体がrejectされるため、失敗も含めて一覧化したい場面では目的が異なります。",
+        "sourceTopicId": "f9e5d902-ffa6-411c-ad74-158bf9c2de7a"
+      },
+      {
+        "id": "auto-20260612-js-async-q4",
+        "difficulty": "expert",
+        "type": "multiple-choice",
+        "prompt": "画面遷移や検索条件変更で古いfetch結果を反映したくない場合の設計として、最も適切なものはどれですか？",
+        "choices": [
+          "AbortControllerのsignalをfetchに渡し、不要になったリクエストを中止する",
+          "setTimeoutで十分長く待てば、古い結果は必ず無視される",
+          "catchを空にすれば通信自体が中止される",
+          "async関数を使うとブラウザが自動で古いリクエストを破棄する"
+        ],
+        "answer": "AbortControllerのsignalをfetchに渡し、不要になったリクエストを中止する",
+        "explanation": "AbortControllerを使うと、不要になったfetchに中止シグナルを送れます。単にcatchを空にしたり待ち時間を長くしたりしても通信や競合は解決しません。UIでは中止と結果反映のガードを組み合わせると安全です。",
+        "sourceTopicId": "f9e5d902-ffa6-411c-ad74-158bf9c2de7a"
+      }
+    ],
+    "createdAt": "2026-06-12T03:23:04.281Z",
+    "updatedAt": "2026-06-12T03:23:04.281Z",
+    "topicLabels": [
+      "javascript"
+    ]
+  },
+  {
+    "id": "5eb3e319-7b06-4548-ab42-bfa75aa0c7df",
+    "title": "自然言語処理 誤り分析クイズ 3",
+    "actionType": "expand",
+    "sourceTopicIds": [
+      "e775dd02-2803-4f1a-a2c7-e65e75212583"
+    ],
+    "improvedFromQuizSetId": "",
+    "generationReason": "既存のトークン化・埋め込み・Transformer・評価指標から範囲を広げ、復習用に誤り分析、データ分割、閾値調整、外部知識利用時の評価を追加した。",
+    "questions": [
+      {
+        "id": "auto-20260612-nlp-error-q1",
+        "difficulty": "beginner",
+        "type": "multiple-choice",
+        "prompt": "テキスト分類モデルの誤り分析で、最初に確認する観点として最も適切なものはどれですか？",
+        "choices": [
+          "誤分類された例を見て、どの表現やラベルで失敗しているかを分類する",
+          "正解した例だけを集めて、失敗例は削除する",
+          "評価指標が高ければ誤り分析は不要と判断する",
+          "入力文をすべて同じ長さに切り詰めれば原因は必ず分かる"
+        ],
+        "answer": "誤分類された例を見て、どの表現やラベルで失敗しているかを分類する",
+        "explanation": "誤り分析では、失敗した例を具体的に見て、特定の語彙、曖昧なラベル、長文、否定表現などの傾向を探します。指標だけでは原因が分からないため、正解例だけを見るのは不十分です。",
+        "sourceTopicId": "e775dd02-2803-4f1a-a2c7-e65e75212583"
+      },
+      {
+        "id": "auto-20260612-nlp-error-q2",
+        "difficulty": "intermediate",
+        "type": "multiple-choice",
+        "prompt": "時系列に投稿されるレビュー文を使って将来の投稿を分類したい場合、評価データ分割で特に避けるべきことはどれですか？",
+        "choices": [
+          "古い投稿で学習し、新しい投稿で評価する",
+          "将来の投稿が訓練データに混ざるようにランダム分割する",
+          "評価時に訓練データと同じ前処理を適用する",
+          "ラベル分布の変化を別途確認する"
+        ],
+        "answer": "将来の投稿が訓練データに混ざるようにランダム分割する",
+        "explanation": "将来データを予測する用途では、時間的に後の投稿が訓練側へ混ざると、現実より楽な評価になります。ランダム分割は便利ですが、時系列の利用場面では情報漏れや過大評価につながる点に注意します。",
+        "sourceTopicId": "e775dd02-2803-4f1a-a2c7-e65e75212583"
+      },
+      {
+        "id": "auto-20260612-nlp-error-q3",
+        "difficulty": "advanced",
+        "type": "multiple-choice",
+        "prompt": "二値分類モデルで確率スコアを出しているとき、再現率を上げたい場合に検討すべき操作として最も適切なものはどれですか？",
+        "choices": [
+          "正例と判定する閾値を下げる",
+          "正例と判定する閾値を必ず0.5に固定する",
+          "テストデータの正解ラベルを予測結果に合わせて変更する",
+          "確率スコアを四捨五入せず、すべて負例にする"
+        ],
+        "answer": "正例と判定する閾値を下げる",
+        "explanation": "閾値を下げると正例として拾う範囲が広がり、再現率が上がることがあります。ただし偽陽性も増えやすいため、適合率とのトレードオフを確認します。0.5固定が常に最適とは限りません。",
+        "sourceTopicId": "e775dd02-2803-4f1a-a2c7-e65e75212583"
+      },
+      {
+        "id": "auto-20260612-nlp-error-q4",
+        "difficulty": "expert",
+        "type": "multiple-choice",
+        "prompt": "外部文書検索を組み合わせた質問応答システムを評価する場合、回答生成モデルだけでなく確認すべき観点はどれですか？",
+        "choices": [
+          "検索で根拠文書を正しく取得できているかと、取得文書に基づいて回答しているか",
+          "回答が長ければ根拠が正しいとみなしてよいか",
+          "検索結果を使わず、生成文の流暢さだけを見れば十分か",
+          "同じ質問に常に同じ文字数で答えるか"
+        ],
+        "answer": "検索で根拠文書を正しく取得できているかと、取得文書に基づいて回答しているか",
+        "explanation": "検索拡張型の質問応答では、検索段階の再現率や根拠文書の妥当性と、生成段階が根拠に沿っているかを分けて評価します。流暢な回答でも、検索失敗や根拠無視があれば実用上の誤りになります。",
+        "sourceTopicId": "e775dd02-2803-4f1a-a2c7-e65e75212583"
+      }
+    ],
+    "createdAt": "2026-06-12T03:28:35.476Z",
+    "updatedAt": "2026-06-12T03:28:35.476Z",
+    "topicLabels": [
+      "自然言語処理"
+    ]
+  },
+  {
+    "id": "dbb22dce-a44d-4a81-bf42-d94ce94607b5",
+    "title": "セキュリティ 運用設計クイズ 2",
+    "actionType": "expand",
+    "sourceTopicIds": [
+      "1160e823-43a5-47c6-9d5e-06560f184e1b"
+    ],
+    "improvedFromQuizSetId": "",
+    "generationReason": "既存の認証認可・SQLi・BOLA・ログ設計から範囲を広げ、セッションCookie、レート制限、依存関係更新、秘密情報管理を追加した。",
+    "questions": [
+      {
+        "id": "auto-20260612-sec-ops-q1",
+        "difficulty": "beginner",
+        "type": "multiple-choice",
+        "prompt": "ログイン状態を保つCookieに付ける属性として、盗聴やスクリプトアクセスのリスクを下げる組み合わせはどれですか？",
+        "choices": [
+          "SecureとHttpOnlyを適切に付ける",
+          "Cookie名を短くするだけで十分",
+          "有効期限を無期限にする",
+          "JavaScriptから常に読み取れるようにする"
+        ],
+        "answer": "SecureとHttpOnlyを適切に付ける",
+        "explanation": "SecureはHTTPS通信でのみCookieを送るために使い、HttpOnlyはJavaScriptからの読み取りを防ぐために使います。名前の長さや無期限化は保護にならず、むしろセッション悪用の影響を大きくします。",
+        "sourceTopicId": "1160e823-43a5-47c6-9d5e-06560f184e1b"
+      },
+      {
+        "id": "auto-20260612-sec-ops-q2",
+        "difficulty": "intermediate",
+        "type": "multiple-choice",
+        "prompt": "ログイン試行の総当たり攻撃を抑える対策として、最も適切なものはどれですか？",
+        "choices": [
+          "エラーメッセージを詳しくすれば攻撃は止まる",
+          "パスワード欄の文字数制限を短くする",
+          "失敗回数やIP、アカウント単位でレート制限や追加確認を入れる",
+          "成功時だけログを残し、失敗時は記録しない"
+        ],
+        "answer": "失敗回数やIP、アカウント単位でレート制限や追加確認を入れる",
+        "explanation": "総当たり攻撃では試行回数を制御することが重要です。IP単位だけでは回避されることがあるため、アカウント単位、失敗回数、追加認証、監視を組み合わせます。失敗ログを残さないと検知も難しくなります。",
+        "sourceTopicId": "1160e823-43a5-47c6-9d5e-06560f184e1b"
+      },
+      {
+        "id": "auto-20260612-sec-ops-q3",
+        "difficulty": "advanced",
+        "type": "multiple-choice",
+        "prompt": "利用中ライブラリに脆弱性情報が出たとき、更新判断として最も妥当なものはどれですか？",
+        "choices": [
+          "脆弱性情報が出たら、影響確認をせず全サービスを停止する",
+          "影響範囲、利用している機能、悪用可能性、修正版の有無を確認して優先度を決める",
+          "直接インターネット公開していなければ常に無視できる",
+          "依存関係は一度入れたら固定し、更新しない方が安全である"
+        ],
+        "answer": "影響範囲、利用している機能、悪用可能性、修正版の有無を確認して優先度を決める",
+        "explanation": "脆弱性対応では、実際に該当機能を使っているか、攻撃経路があるか、修正版や回避策があるかを見ます。無条件停止や無視ではなく、リスクと運用影響を踏まえて優先順位を付けます。",
+        "sourceTopicId": "1160e823-43a5-47c6-9d5e-06560f184e1b"
+      },
+      {
+        "id": "auto-20260612-sec-ops-q4",
+        "difficulty": "expert",
+        "type": "multiple-choice",
+        "prompt": "アプリケーションの秘密情報管理として、最も望ましい設計はどれですか？",
+        "choices": [
+          "GitHubでprivateにすれば、APIキーをコードに書いても漏えいリスクはない",
+          "ログに出しておくと調査しやすいので、トークン全文を常に記録する",
+          "開発用と本番用で同じ秘密情報を使い回す",
+          "ソースコードには埋め込まず、環境変数や秘密情報管理サービスから必要最小限で読み込む"
+        ],
+        "answer": "ソースコードには埋め込まず、環境変数や秘密情報管理サービスから必要最小限で読み込む",
+        "explanation": "秘密情報はコードやログに残さず、権限を絞って管理するのが基本です。privateリポジトリでも漏えい経路はあり、ログ出力や環境間の使い回しは被害範囲を広げます。ローテーションしやすい設計も重要です。",
+        "sourceTopicId": "1160e823-43a5-47c6-9d5e-06560f184e1b"
+      }
+    ],
+    "createdAt": "2026-06-12T03:28:35.495Z",
+    "updatedAt": "2026-06-12T03:28:35.495Z",
+    "topicLabels": [
+      "セキュリティ"
+    ]
+  },
+  {
+    "id": "e2dd636e-8465-4445-9aaa-ace1e85881a4",
+    "title": "暗号理論 実装判断クイズ 2",
+    "actionType": "expand",
+    "sourceTopicIds": [
+      "ed13aac7-bac1-4d97-901b-206bfaa31f76"
+    ],
+    "improvedFromQuizSetId": "",
+    "generationReason": "既存のハッシュ・MAC・AEAD・ゼロ知識から範囲を広げ、鍵導出、AEAD関連データ、Forward Secrecy、サイドチャネルへの実装判断を追加した。",
+    "questions": [
+      {
+        "id": "auto-20260612-crypto-impl-q1",
+        "difficulty": "beginner",
+        "type": "multiple-choice",
+        "prompt": "パスワードから暗号鍵を作る場合、通常の高速ハッシュ関数だけでなくKDFを使う主な理由はどれですか？",
+        "choices": [
+          "推測攻撃を遅くし、saltなどを使って同じパスワードでも結果を変えやすくするため",
+          "暗号鍵を短くして総当たりしやすくするため",
+          "復号時にパスワードを平文で保存するため",
+          "ハッシュ値を人間が読みやすい文章に戻すため"
+        ],
+        "answer": "推測攻撃を遅くし、saltなどを使って同じパスワードでも結果を変えやすくするため",
+        "explanation": "パスワードは推測されやすいため、KDFでは計算コストやsaltを使って総当たりや事前計算を難しくします。高速ハッシュだけでは攻撃者が大量試行しやすく、鍵を安全に導出する目的に合わないことがあります。",
+        "sourceTopicId": "ed13aac7-bac1-4d97-901b-206bfaa31f76"
+      },
+      {
+        "id": "auto-20260612-crypto-impl-q2",
+        "difficulty": "intermediate",
+        "type": "multiple-choice",
+        "prompt": "AEADの関連データAADとして扱うのに適した情報はどれですか？",
+        "choices": [
+          "攻撃者に絶対見せたくない本文そのもの",
+          "暗号化は不要だが改ざんされると困るヘッダーやメタデータ",
+          "nonceの再利用を許すための予備データ",
+          "復号後に検証しなくてもよい任意のコメント"
+        ],
+        "answer": "暗号化は不要だが改ざんされると困るヘッダーやメタデータ",
+        "explanation": "AEADのAADは暗号化されませんが認証対象になります。プロトコルバージョンやヘッダーなど、見えてもよいが改ざんされると危険な情報に使います。秘密にしたい本文は暗号化対象へ入れる点が誤解しやすいところです。",
+        "sourceTopicId": "ed13aac7-bac1-4d97-901b-206bfaa31f76"
+      },
+      {
+        "id": "auto-20260612-crypto-impl-q3",
+        "difficulty": "advanced",
+        "type": "multiple-choice",
+        "prompt": "Forward Secrecyが目指す性質として最も適切なものはどれですか？",
+        "choices": [
+          "暗号文を短くして通信量を減らす性質",
+          "公開鍵を使わずに全員が同じ鍵を共有する性質",
+          "長期秘密鍵が後で漏れても、過去の通信内容が直ちに復号されにくい性質",
+          "認証を省略しても通信相手を保証する性質"
+        ],
+        "answer": "長期秘密鍵が後で漏れても、過去の通信内容が直ちに復号されにくい性質",
+        "explanation": "Forward Secrecyでは、セッションごとの一時鍵交換などにより、長期鍵漏えいが過去通信の一括復号に直結しにくい設計を目指します。認証不要という意味ではなく、鍵管理上の被害範囲を抑える性質です。",
+        "sourceTopicId": "ed13aac7-bac1-4d97-901b-206bfaa31f76"
+      },
+      {
+        "id": "auto-20260612-crypto-impl-q4",
+        "difficulty": "expert",
+        "type": "multiple-choice",
+        "prompt": "暗号アルゴリズム自体は安全でも、実装でサイドチャネル攻撃を招く可能性がある例はどれですか？",
+        "choices": [
+          "公開鍵を公開ディレクトリで配布する",
+          "暗号文をbase64で表現する",
+          "仕様書に従ってnonceを一意に管理する",
+          "秘密値によって処理時間やメモリアクセスの傾向が変わる比較処理を使う"
+        ],
+        "answer": "秘密値によって処理時間やメモリアクセスの傾向が変わる比較処理を使う",
+        "explanation": "サイドチャネル攻撃では、処理時間やキャッシュアクセスなど副次的な情報から秘密を推測します。安全なアルゴリズムでも、秘密依存の分岐や早期終了比較を使うと漏えいにつながるため、定時間処理など実装上の配慮が必要です。",
+        "sourceTopicId": "ed13aac7-bac1-4d97-901b-206bfaa31f76"
+      }
+    ],
+    "createdAt": "2026-06-12T03:28:35.508Z",
+    "updatedAt": "2026-06-12T03:28:35.508Z",
+    "topicLabels": [
+      "暗号理論"
     ]
   }
 ]

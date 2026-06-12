@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "decisions": [
+    {
+      "id": "review-20260609-boki-cash-debit-explanation",
+      "scope": "question",
+      "quizSetId": "616a6674-a7bb-42ae-bd2c-a88888c66c9f",
+      "questionId": "616a6674-a7bb-42ae-bd2c-a88888c66c9f-q1",
+      "decision": "hide",
+      "reason": "改善版の問題を追加したため、旧問題は履歴に残しつつ公開対象から外す。改善版では現金増加と売上発生を組み合わせ、借方・貸方の理由まで説明している。",
+      "reviewer": "codex",
+      "reviewedAt": "2026-06-12T03:19:17.500Z",
+      "preferred": {
+        "quizSetId": "c27a8234-180b-477a-8c13-9ec110e0cb9d",
+        "questionId": "auto-20260612-boki-improve-q1"
+      }
+    },
+    {
+      "id": "review-20260609-boki-credit-sale-explanation",
+      "scope": "question",
+      "quizSetId": "616a6674-a7bb-42ae-bd2c-a88888c66c9f",
+      "questionId": "616a6674-a7bb-42ae-bd2c-a88888c66c9f-q2",
+      "decision": "hide",
+      "reason": "改善版の問題を追加したため、旧問題は履歴に残しつつ公開対象から外す。改善版では掛け販売後の回収を扱い、売掛金と売上を二重計上しない理由まで説明している。",
+      "reviewer": "codex",
+      "reviewedAt": "2026-06-12T03:19:17.500Z",
+      "preferred": {
+        "quizSetId": "c27a8234-180b-477a-8c13-9ec110e0cb9d",
+        "questionId": "auto-20260612-boki-improve-q2"
+      }
+    }
+  ]
+}
