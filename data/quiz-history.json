@@ -1478,5 +1478,169 @@
     ],
     "createdAt": "2026-06-12T03:28:35.508Z",
     "updatedAt": "2026-06-12T03:28:35.508Z"
+  },
+  {
+    "id": "5ebb051a-7c84-4acf-9dd7-08850e942272",
+    "title": "MySQL 基礎機能 初回クイズ",
+    "actionType": "create",
+    "sourceTopicIds": [
+      "c25df232-2571-4a24-b297-62ea097d72d5"
+    ],
+    "improvedFromQuizSetId": "",
+    "generationReason": "新しく追加されたmysqlメモに対する初回生成。基礎的なSQL操作、JOIN、集計、NULL、文字列関数、日付関数、テーブル定義、更新時の注意を幅広く確認する。",
+    "questions": [
+      {
+        "id": "auto-20260614-mysql-basic-q1",
+        "difficulty": "beginner",
+        "type": "multiple-choice",
+        "prompt": "MySQLでusersテーブルから全列ではなくname列だけを取得したい場合、基本形として適切なSQLはどれですか？",
+        "choices": [
+          "SELECT name FROM users;",
+          "GET name IN users;",
+          "SHOW name FROM users;",
+          "SELECT users INTO name;"
+        ],
+        "answer": "SELECT name FROM users;",
+        "explanation": "特定列を取得する基本形はSELECT 列名 FROM テーブル名です。SHOWはテーブル定義などの確認に使う場面があり、GETやSELECT ... INTOの形はこの目的の基本的な取得文ではありません。",
+        "sourceTopicId": "c25df232-2571-4a24-b297-62ea097d72d5"
+      },
+      {
+        "id": "auto-20260614-mysql-basic-q2",
+        "difficulty": "beginner",
+        "type": "multiple-choice",
+        "prompt": "MySQLで検索結果をpriceの高い順に並べ、先頭5件だけ取得したい場合に使う組み合わせとして適切なものはどれですか？",
+        "choices": [
+          "GROUP BY price DESC LIMIT 5",
+          "ORDER BY price DESC LIMIT 5",
+          "WHERE price DESC TAKE 5",
+          "SORT price DESC TOP 5"
+        ],
+        "answer": "ORDER BY price DESC LIMIT 5",
+        "explanation": "並び替えにはORDER BY、降順にはDESC、件数制限にはLIMITを使います。GROUP BYは集計単位を作る句であり、単なる並び替えや件数制限の代わりにはなりません。",
+        "sourceTopicId": "c25df232-2571-4a24-b297-62ea097d72d5"
+      },
+      {
+        "id": "auto-20260614-mysql-basic-q3",
+        "difficulty": "beginner",
+        "type": "multiple-choice",
+        "prompt": "MySQLでNULLの可能性があるnicknameを表示し、NULLなら\"未設定\"に置き換えたい場合に使いやすい関数はどれですか？",
+        "choices": [
+          "CONCAT(nickname, \"未設定\")",
+          "COUNT(nickname, \"未設定\")",
+          "COALESCE(nickname, \"未設定\")",
+          "GROUP BY nickname, \"未設定\""
+        ],
+        "answer": "COALESCE(nickname, \"未設定\")",
+        "explanation": "COALESCEは引数のうち最初にNULLでない値を返すため、NULL時の代替表示に使えます。CONCATは文字列結合、COUNTは件数集計、GROUP BYは集計のグループ化であり、NULL置換の直接的な関数ではありません。",
+        "sourceTopicId": "c25df232-2571-4a24-b297-62ea097d72d5"
+      },
+      {
+        "id": "auto-20260614-mysql-basic-q4",
+        "difficulty": "intermediate",
+        "type": "multiple-choice",
+        "prompt": "ordersテーブルにuser_idがあり、usersテーブルのidと結び付けて注文者名も表示したい場合、基本的なINNER JOIN条件として適切なものはどれですか？",
+        "choices": [
+          "INNER JOIN users ON orders.user_id",
+          "INNER JOIN users WHERE orders.user_id = users.id",
+          "INNER JOIN users BY orders.user_id = users.id",
+          "INNER JOIN users ON orders.user_id = users.id"
+        ],
+        "answer": "INNER JOIN users ON orders.user_id = users.id",
+        "explanation": "JOINでは結合先テーブルとON句で結合条件を指定するのが基本です。条件の片側だけでは対応関係が決まらず、BYはJOIN条件の句ではありません。WHEREで書ける場面もありますが、JOINの対応条件はONに置くと意図が明確です。",
+        "sourceTopicId": "c25df232-2571-4a24-b297-62ea097d72d5"
+      },
+      {
+        "id": "auto-20260614-mysql-basic-q5",
+        "difficulty": "intermediate",
+        "type": "multiple-choice",
+        "prompt": "商品カテゴリごとの売上合計を出し、合計が10000以上のカテゴリだけに絞る場合、集計後の条件に使う句はどれですか？",
+        "choices": [
+          "HAVING SUM(amount) >= 10000",
+          "WHERE SUM(amount) >= 10000",
+          "ORDER BY SUM(amount) >= 10000",
+          "LIMIT SUM(amount) >= 10000"
+        ],
+        "answer": "HAVING SUM(amount) >= 10000",
+        "explanation": "GROUP BYで集計した後の条件にはHAVINGを使います。WHEREは集計前の行を絞るための句なので、SUMのような集計結果に対する条件とは役割が違います。",
+        "sourceTopicId": "c25df232-2571-4a24-b297-62ea097d72d5"
+      },
+      {
+        "id": "auto-20260614-mysql-basic-q6",
+        "difficulty": "intermediate",
+        "type": "multiple-choice",
+        "prompt": "MySQLで姓と名の列 last_name と first_name を1つの表示名として連結したい場合に使う代表的な文字列関数はどれですか？",
+        "choices": [
+          "DATEDIFF(last_name, first_name)",
+          "COALESCE(last_name, first_name)",
+          "COUNT(last_name, first_name)",
+          "CONCAT(last_name, first_name)"
+        ],
+        "answer": "CONCAT(last_name, first_name)",
+        "explanation": "CONCATは複数の文字列を連結する関数です。DATEDIFFは日付差、COUNTは件数集計、COALESCEはNULLでない最初の値を返す関数で、文字列を並べて結合する目的とは異なります。",
+        "sourceTopicId": "c25df232-2571-4a24-b297-62ea097d72d5"
+      },
+      {
+        "id": "auto-20260614-mysql-basic-q7",
+        "difficulty": "advanced",
+        "type": "multiple-choice",
+        "prompt": "LEFT JOINを使う主な目的として適切な説明はどれですか？",
+        "choices": [
+          "右側テーブルに一致する行がある場合だけ左側テーブルの行を表示する",
+          "左側テーブルの行を残し、一致する右側テーブルの行がなければ右側列をNULLとして表示する",
+          "左右両方のテーブルに存在しない行だけを表示する",
+          "結合条件を省略して常に1行だけ返す"
+        ],
+        "answer": "左側テーブルの行を残し、一致する右側テーブルの行がなければ右側列をNULLとして表示する",
+        "explanation": "LEFT JOINは左側テーブルを基準に行を残し、右側に対応行がない場合は右側の列がNULLになります。一致行だけに絞る説明はINNER JOINに近く、結合条件を省略する理解は誤りです。",
+        "sourceTopicId": "c25df232-2571-4a24-b297-62ea097d72d5"
+      },
+      {
+        "id": "auto-20260614-mysql-basic-q8",
+        "difficulty": "advanced",
+        "type": "multiple-choice",
+        "prompt": "usersテーブルでidを自動採番する主キーとして定義したい場合、MySQLでよく使う列定義はどれですか？",
+        "choices": [
+          "id VARCHAR(255) DEFAULT PRIMARY KEY",
+          "id INT AUTO_INCREMENT PRIMARY KEY",
+          "id DATE AUTO_NUMBER UNIQUE",
+          "id TEXT INCREMENT KEY"
+        ],
+        "answer": "id INT AUTO_INCREMENT PRIMARY KEY",
+        "explanation": "MySQLでは整数列にAUTO_INCREMENTを付けて自動採番し、PRIMARY KEYとして一意な識別子にする定義がよく使われます。DEFAULTやUNIQUEだけでは自動採番にならず、TEXTやDATEはこの用途の代表的な型ではありません。",
+        "sourceTopicId": "c25df232-2571-4a24-b297-62ea097d72d5"
+      },
+      {
+        "id": "auto-20260614-mysql-basic-q9",
+        "difficulty": "expert",
+        "type": "multiple-choice",
+        "prompt": "MySQLでUPDATEを実行するとき、誤って多くの行を変更する事故を避けるために最も重要な確認はどれですか？",
+        "choices": [
+          "更新前にWHERE条件で対象行が十分に絞られているか確認する",
+          "SET句に必ずORDER BYを書いているか確認する",
+          "SELECT句をUPDATE文の先頭に付けているか確認する",
+          "更新対象テーブルをFROM句に2回書いているか確認する"
+        ],
+        "answer": "更新前にWHERE条件で対象行が十分に絞られているか確認する",
+        "explanation": "UPDATEはWHERE条件がない、または条件が広すぎると多数の行を変更します。ORDER BYやLIMITを使う場面もありますが、まず対象行をWHEREで明確に絞れているかを確認することが重要です。",
+        "sourceTopicId": "c25df232-2571-4a24-b297-62ea097d72d5"
+      },
+      {
+        "id": "auto-20260614-mysql-basic-q10",
+        "difficulty": "expert",
+        "type": "multiple-choice",
+        "prompt": "日付列created_atに対して、登録日の7日後を求めるMySQLの代表的な式として適切なものはどれですか？",
+        "choices": [
+          "CONCAT(created_at, INTERVAL 7 DAY)",
+          "COUNT(created_at + 7 DAY)",
+          "created_at GROUP BY 7 DAY",
+          "DATE_ADD(created_at, INTERVAL 7 DAY)"
+        ],
+        "answer": "DATE_ADD(created_at, INTERVAL 7 DAY)",
+        "explanation": "DATE_ADDは日付や日時にINTERVALを加算する関数です。CONCATは文字列結合、COUNTは件数集計、GROUP BYは集計単位を作る句なので、日付の7日後を計算する目的とは異なります。",
+        "sourceTopicId": "c25df232-2571-4a24-b297-62ea097d72d5"
+      }
+    ],
+    "createdAt": "2026-06-14T12:38:34.448Z",
+    "updatedAt": "2026-06-14T12:38:34.448Z"
   }
 ]

@@ -3,10 +3,10 @@
     "id": "bf62bf13-0825-48d9-95f3-7c844a8d9b17",
     "target": "HTML/CSS",
     "priority": "low",
-    "status": "active",
+    "status": "archived",
     "note": "",
     "createdAt": "2026-06-07T09:32:18.525Z",
-    "updatedAt": "2026-06-08T12:56:17.855Z"
+    "updatedAt": "2026-06-09T11:09:35.114Z"
   },
   {
     "id": "e775dd02-2803-4f1a-a2c7-e65e75212583",
@@ -47,10 +47,19 @@
   {
     "id": "f9e5d902-ffa6-411c-ad74-158bf9c2de7a",
     "target": "javascript",
-    "priority": "high",
+    "priority": "low",
     "status": "active",
     "note": "",
     "createdAt": "2026-06-08T12:56:10.897Z",
-    "updatedAt": "2026-06-08T12:56:23.419Z"
+    "updatedAt": "2026-06-14T12:35:44.119Z"
+  },
+  {
+    "id": "c25df232-2571-4a24-b297-62ea097d72d5",
+    "target": "mysql",
+    "priority": "high",
+    "status": "active",
+    "note": "基礎的な機能の範囲で使い方や関数の名前、知識を身に着けたい",
+    "createdAt": "2026-06-14T12:35:31.340Z",
+    "updatedAt": "2026-06-14T12:35:31.340Z"
   }
 ]

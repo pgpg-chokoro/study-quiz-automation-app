@@ -1,5 +1,16 @@
 export const REVIEW_DECISIONS = new Set(["keep", "hide", "needs-improvement"]);
 export const REVIEW_SCOPES = new Set(["quiz-set", "question"]);
+export const REVIEW_QUALITY_TAGS = new Set([
+  "ambiguous-answer",
+  "weak-explanation",
+  "unnatural-distractors",
+  "difficulty-mismatch",
+  "duplicate-better-exists",
+  "coverage-gap",
+  "factual-risk",
+  "cognitive-load-high",
+  "answer-position-skew"
+]);
 
 export function createEmptyQuizReview() {
   return {
@@ -106,6 +117,24 @@ export function validateQuizReview(quizReview, quizHistory) {
 
     if ((decision === "hide" || decision === "needs-improvement") && !hasText(entry.reason)) {
       issues.push(prefix + ": hide / needs-improvement では reason が必要です。");
+    }
+
+    if (entry.qualityTags !== undefined) {
+      if (!Array.isArray(entry.qualityTags)) {
+        issues.push(prefix + ": qualityTags は配列である必要があります。");
+      } else {
+        const seenTags = new Set();
+        entry.qualityTags.forEach((tag, tagIndex) => {
+          const normalizedTag = String(tag ?? "").trim();
+          if (!REVIEW_QUALITY_TAGS.has(normalizedTag)) {
+            issues.push(prefix + ": qualityTags[" + tagIndex + "] が不正です: " + normalizedTag);
+          }
+          if (seenTags.has(normalizedTag)) {
+            issues.push(prefix + ": qualityTags が重複しています: " + normalizedTag);
+          }
+          seenTags.add(normalizedTag);
+        });
+      }
     }
 
     if (entry.preferred) {

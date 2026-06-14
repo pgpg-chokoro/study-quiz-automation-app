@@ -13,7 +13,11 @@
       "preferred": {
         "quizSetId": "c27a8234-180b-477a-8c13-9ec110e0cb9d",
         "questionId": "auto-20260612-boki-improve-q1"
-      }
+      },
+      "qualityTags": [
+        "duplicate-better-exists",
+        "weak-explanation"
+      ]
     },
     {
       "id": "review-20260609-boki-credit-sale-explanation",
@@ -27,7 +31,11 @@
       "preferred": {
         "quizSetId": "c27a8234-180b-477a-8c13-9ec110e0cb9d",
         "questionId": "auto-20260612-boki-improve-q2"
-      }
+      },
+      "qualityTags": [
+        "duplicate-better-exists",
+        "weak-explanation"
+      ]
     }
   ]
 }

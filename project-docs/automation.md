@@ -101,13 +101,38 @@ Codexは `status` が `active` のメモを主な対象にします。
 
 判定の `decision` は以下を使います。
 
-- `keep`: 似た問題の代表として残す。
+- `keep`: 類似クラスタの代表として公開を継続する。
 - `hide`: 履歴には残すが、GitHub Pages向けの公開データから除外する。
-- `needs-improvement`: 公開は継続するが、改善候補として記録する。
+- `needs-improvement`: 公開は継続するが、次回以降の改善候補として記録する。
 
-`scope` は `quiz-set` または `question` を使います。`question` の場合は `quizSetId` と `questionId` の両方が必要です。`hide` と `needs-improvement` には、必ず `reason` を書きます。
+`scope` は `quiz-set` または `question` を使います。`question` の場合は `quizSetId` と `questionId` の両方が必要です。`hide` と `needs-improvement` には、必ず `reason` を書きます。`qualityTags` は任意ですが、改善理由を機械的に拾いやすくするため、該当するものを付けます。
+
+推奨する `qualityTags` は以下です。
+
+- `ambiguous-answer`: 正答が一意に決まりにくい。
+- `weak-explanation`: 解説が薄い、誤答しやすい点が不足している。
+- `unnatural-distractors`: 誤答選択肢が不自然、または正答だけが浮いている。
+- `difficulty-mismatch`: 難易度ラベルと実際の要求水準が合っていない。
+- `duplicate-better-exists`: 似た良問があり、代表問題へ寄せるべき。
+- `coverage-gap`: ジャンル内の出題観点が偏っている。
+- `factual-risk`: 事実誤り、または根拠が不安定な可能性がある。
+- `cognitive-load-high`: 条件が多すぎる、読み取り負荷が高すぎる。
+- `answer-position-skew`: 正答位置の偏りが目立つ。
 
 公開サイト生成時は、`hide` 判定のクイズセットや問題だけを除外します。`quiz-history.json` の既存履歴は変更しません。
+
+## レビューの4層構造
+
+1. 必須チェック: JSON構造、必須項目、正答の一意性、選択肢重複、空欄、append-only、公開データ混入をCIで確認する。
+2. レビュー候補レポート: 類似問題、短い解説、難易度不足、正答位置偏り、改善元未判定、カバレッジ不足を `npm run review:quiz` で出す。
+3. サブエージェント品質レビュー: 新規追加セットを対象に、自然さ、難易度、選択肢、解説、重複、カバレッジを確認する。
+4. 判定確定: 担当Codexまたは人間が `keep` / `hide` / `needs-improvement` を確定し、次回自動化の入力にする。
+
+## keep / hide / needs-improvement の判断基準
+
+- `keep`: 内容が正確、問題文だけで理解できる、正答が一意、誤答に教育的意味がある、難易度が妥当、類似していても別観点・別難易度として価値がある。
+- `needs-improvement`: 核となる内容は正しいが、表現、選択肢、解説、難易度、カバレッジのいずれかに改善余地がある。
+- `hide`: 事実誤り、正答曖昧、問題文だけでは意味が分からない、誤解を強める、完全重複または既存の良問に劣る、改善版に置き換え済み。
 
 ## 推奨される自動化プロンプト
 
@@ -119,6 +144,7 @@ activeな学習メモを対象に、targetを大分類として解釈し、細�
 難易度は beginner / intermediate / advanced / expert を使い、原則multiple-choiceにしてください。
 テーマや難易度に応じて true-false / fill-blank / short-answer も使って構いません。
 既存履歴は削除・上書きせず、必ず追記してください。
-生成後は npm run validate:quiz を実行し、正答位置の偏り、解説不足、選択肢不備を確認してください。
-npm run validate:append-only も実行し、quiz-history.json が既存履歴を変更せず末尾追記だけになっていることを確認してください。
+生成後は npm run prepublish:check を実行し、構造チェック、追記専用チェック、レビュー判定チェック、レビュー候補レポート、セキュリティスキャンを確認してください。
+npm run review:quiz の候補が出た場合は、必要に応じて data/quiz-review.json に keep / hide / needs-improvement と qualityTags を記録してください。
+needs-improvement がある場合は、次回以降の improve / expand で優先的に解消してください。
 ```

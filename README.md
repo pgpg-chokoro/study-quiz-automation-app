@@ -28,7 +28,7 @@ PORT=3001 npm run dev
 
 - `data/study-topics.json`: 学習メモ一覧
 - `data/quiz-history.json`: クイズ生成・改善履歴
-- `data/quiz-review.json`: クイズのレビュー判定
+- `data/quiz-review.json`: クイズのレビュー判定。`qualityTags` で改善理由を分類できます。
 
 JSONファイルはアプリとCodexオートメーションの共有データです。手動編集する場合は、各ファイルの形式を維持してください。
 
@@ -41,6 +41,8 @@ npm run validate:duplicates
 npm run validate:review
 npm run review:quiz
 ```
+
+`review:quiz` はCIを落とすチェックではなく、類似問題、解説不足、正答位置偏り、改善元未判定、カバレッジ不足などをレビュー候補として出力します。
 
 ## Codexオートメーション
 

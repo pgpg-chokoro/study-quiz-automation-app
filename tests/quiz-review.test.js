@@ -101,3 +101,44 @@ test("存在しない問題を指すレビュー判定は検出される", () =>
   assert.equal(issues.length, 1);
   assert.match(issues[0], /questionId/);
 });
+
+
+test("qualityTags を検証できる", () => {
+  const review = {
+    version: 1,
+    decisions: [
+      {
+        id: "review-4",
+        scope: "question",
+        quizSetId: "set-1",
+        questionId: "q-1",
+        decision: "needs-improvement",
+        reason: "解説が薄い",
+        qualityTags: ["weak-explanation"]
+      }
+    ]
+  };
+
+  assert.deepEqual(validateQuizReview(review, quizHistory), []);
+});
+
+test("不正な qualityTags は検出される", () => {
+  const review = {
+    version: 1,
+    decisions: [
+      {
+        id: "review-5",
+        scope: "question",
+        quizSetId: "set-1",
+        questionId: "q-1",
+        decision: "needs-improvement",
+        reason: "解説が薄い",
+        qualityTags: ["unknown-tag"]
+      }
+    ]
+  };
+
+  const issues = validateQuizReview(review, quizHistory);
+  assert.equal(issues.length, 1);
+  assert.match(issues[0], /qualityTags/);
+});
